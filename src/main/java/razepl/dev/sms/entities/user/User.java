@@ -35,7 +35,6 @@ import static razepl.dev.sms.entities.user.constants.UserValidationMessages.*;
  * The class has several annotations that specify its behavior and constraints.
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document(collection = "users")

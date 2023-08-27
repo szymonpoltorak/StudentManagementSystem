@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import razepl.dev.sms.entities.token.interfaces.Token;
 import razepl.dev.sms.entities.user.User;
@@ -16,7 +17,6 @@ import razepl.dev.sms.entities.user.User;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Document(collection = "jwt_tokens")
 public class JwtToken implements Token {
     @Id
@@ -28,7 +28,7 @@ public class JwtToken implements Token {
     @NotNull
     private TokenType tokenType;
 
-    @NotNull
+    @DBRef
     private User user;
 
     private boolean isExpired;

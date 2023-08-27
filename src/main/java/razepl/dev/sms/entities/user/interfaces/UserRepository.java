@@ -7,6 +7,10 @@ import razepl.dev.sms.entities.user.User;
 
 import java.util.Optional;
 
+/**
+ * A repository interface for accessing and managing {@link User} entities.
+ * It extends the {@link MongoRepository} interface to inherit common CRUD and pagination operations.
+ */
 @Repository
 public interface UserRepository extends MongoRepository<User, Long> {
     /**
@@ -31,10 +35,8 @@ public interface UserRepository extends MongoRepository<User, Long> {
      * @param authToken the authentication token of the user to find
      * @return an Optional containing the user associated with the given authentication token, or empty if not found
      */
-//    @Query("select u from User as u inner join JwtToken as t on u.userId = t.user.userId where t.token = :authToken")
-//    @Query("{'userId': { $in: db.jwtToken.aggregate([{$match: {token: ?0}} , {$group: { _id: '$user.userId'}} , {$project: { _id: 0, userId: '$_id'}}])}}")
-//    Optional<User> findUserByToken(String authToken);
-
+    @Query("{ 'jwt_tokens.tokenId': ?0 }")
+    Optional<User> findUserByToken(String authToken);
 
     /**
      * Represents a method to delete a user by email.
