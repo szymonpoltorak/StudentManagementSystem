@@ -7,7 +7,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * The SecurityConfigInterface interface provides a method to define the security filter chain
  * for the application.
  */
-public interface SecurityConfigInterface {
+public interface SecurityConfiguration {
 
     /**
      * Configures the security filter chain for the application.
