@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.user.interfaces;
+package razepl.dev.sms.documents.user.interfaces;
 
 public interface UserPropertyInterface {
     /**

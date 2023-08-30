@@ -38,11 +38,15 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public final String getUsernameFromToken(String jwtToken) {
+        ArgumentValidator.throwIfNull(jwtToken);
+
         return getClaimFromToken(jwtToken, Claims::getSubject);
     }
 
     @Override
     public final <T> T getClaimFromToken(String jwtToken, Function<Claims, T> claimsHandler) {
+        ArgumentValidator.throwIfNull(jwtToken, claimsHandler);
+
         Claims claims = getAllClaims(jwtToken);
 
         return claimsHandler.apply(claims);

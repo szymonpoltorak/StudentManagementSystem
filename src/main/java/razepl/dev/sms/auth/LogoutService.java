@@ -8,8 +8,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
-import razepl.dev.sms.entities.token.JwtToken;
-import razepl.dev.sms.entities.token.interfaces.TokenRepository;
+import razepl.dev.sms.ArgumentValidator;
+import razepl.dev.sms.documents.token.JwtToken;
+import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.exceptions.TokenDoesNotExistException;
 
 import static razepl.dev.sms.config.constants.Headers.*;
@@ -25,6 +26,8 @@ public class LogoutService implements LogoutHandler {
 
     @Override
     public final void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        ArgumentValidator.throwIfNull(request, response, authentication);
+
         String authHeader = request.getHeader(AUTH_HEADER);
 
         if (authHeader == null || !authHeader.startsWith(TOKEN_HEADER)) {

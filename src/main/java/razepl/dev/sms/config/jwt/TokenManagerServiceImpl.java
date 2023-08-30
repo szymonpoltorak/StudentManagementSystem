@@ -6,11 +6,11 @@ import razepl.dev.sms.ArgumentValidator;
 import razepl.dev.sms.auth.data.AuthResponse;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
-import razepl.dev.sms.entities.token.JwtToken;
-import razepl.dev.sms.entities.token.TokenType;
-import razepl.dev.sms.entities.token.interfaces.TokenRepository;
-import razepl.dev.sms.entities.user.User;
-import razepl.dev.sms.entities.user.interfaces.UserRepository;
+import razepl.dev.sms.documents.token.JwtToken;
+import razepl.dev.sms.documents.token.TokenType;
+import razepl.dev.sms.documents.token.interfaces.TokenRepository;
+import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.documents.user.interfaces.UserRepository;
 
 import java.util.List;
 

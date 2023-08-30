@@ -1,9 +1,9 @@
-package razepl.dev.sms.entities.user.interfaces;
+package razepl.dev.sms.documents.user.interfaces;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import razepl.dev.sms.entities.user.User;
+import razepl.dev.sms.documents.user.User;
 
 import java.util.Optional;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
  * It extends the {@link MongoRepository} interface to inherit common CRUD and pagination operations.
  */
 @Repository
-public interface UserRepository extends MongoRepository<User, Long> {
+public interface UserRepository extends MongoRepository<User, String> {
     /**
      * Finds a user by email address.
      *

@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.token.interfaces;
+package razepl.dev.sms.documents.token.interfaces;
 
 /**
  * Interface for JwtToken entity class.

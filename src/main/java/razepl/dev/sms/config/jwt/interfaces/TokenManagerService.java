@@ -1,7 +1,7 @@
 package razepl.dev.sms.config.jwt.interfaces;
 
 import razepl.dev.sms.auth.data.AuthResponse;
-import razepl.dev.sms.entities.user.User;
+import razepl.dev.sms.documents.user.User;
 
 /**
  * An interface for managing authentication tokens for users.

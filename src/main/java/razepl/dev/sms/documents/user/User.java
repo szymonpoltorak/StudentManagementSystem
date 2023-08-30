@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.user;
+package razepl.dev.sms.documents.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -12,12 +12,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
-import razepl.dev.sms.entities.user.interfaces.ServiceUser;
+import razepl.dev.sms.documents.user.interfaces.ServiceUser;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -25,8 +24,8 @@ import java.time.Period;
 import java.util.Collection;
 import java.util.List;
 
-import static razepl.dev.sms.entities.user.constants.UserValidation.*;
-import static razepl.dev.sms.entities.user.constants.UserValidationMessages.*;
+import static razepl.dev.sms.documents.user.constants.UserValidation.*;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.*;
 
 /**
  * This class represents a user in the system.
@@ -36,6 +35,7 @@ import static razepl.dev.sms.entities.user.constants.UserValidationMessages.*;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Document(collection = "users")
 public class User implements ServiceUser {
@@ -65,7 +65,7 @@ public class User implements ServiceUser {
     private String location;
 
     @Id
-    private long userId;
+    private String userId;
 
     @Override
     public final int getAge() {

@@ -1,9 +1,9 @@
-package razepl.dev.sms.entities.token.interfaces;
+package razepl.dev.sms.documents.token.interfaces;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import razepl.dev.sms.entities.token.JwtToken;
+import razepl.dev.sms.documents.token.JwtToken;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.Optional;
  * It extends {@link MongoRepository}.
  */
 @Repository
-public interface TokenRepository extends MongoRepository<JwtToken, Long> {
+public interface TokenRepository extends MongoRepository<JwtToken, String> {
     /**
      * Method to find token object inside database by the given token string
      *
@@ -30,7 +30,7 @@ public interface TokenRepository extends MongoRepository<JwtToken, Long> {
      */
     @Query("""
     {
-        'users.userId': ?0,
+        'user.userId': ?0,
         $or: [
             {
                 'isExpired': false
@@ -41,5 +41,5 @@ public interface TokenRepository extends MongoRepository<JwtToken, Long> {
         ]
     }
     """)
-    List<JwtToken> findAllValidTokensByUserId(Long id);
+    List<JwtToken> findAllValidTokensByUserId(String id);
 }

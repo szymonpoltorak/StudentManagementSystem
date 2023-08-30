@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.user.constants;
+package razepl.dev.sms.documents.user.constants;
 
 /**
  * A utility class that contains constants for user validation messages.

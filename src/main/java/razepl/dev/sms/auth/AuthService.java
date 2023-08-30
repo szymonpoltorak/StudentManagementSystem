@@ -15,14 +15,14 @@ import razepl.dev.sms.auth.data.*;
 import razepl.dev.sms.auth.interfaces.AuthServiceInterface;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
-import razepl.dev.sms.entities.user.User;
-import razepl.dev.sms.entities.user.interfaces.UserRepository;
+import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.*;
 
 import java.util.Optional;
 
-import static razepl.dev.sms.entities.user.constants.UserValidation.PASSWORD_PATTERN;
-import static razepl.dev.sms.entities.user.constants.UserValidationMessages.PASSWORD_PATTERN_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidation.PASSWORD_PATTERN;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.PASSWORD_PATTERN_MESSAGE;
 
 /**
  * Class to manage logic for {@link AuthControllerImpl}.
@@ -40,6 +40,8 @@ public class AuthService implements AuthServiceInterface {
 
     @Override
     public final AuthResponse register(RegisterRequest registerRequest) {
+        ArgumentValidator.throwIfNull(registerRequest);
+
         log.info("Registering user with data: \n{}", registerRequest);
 
         String password = validateUserRegisterData(registerRequest);
@@ -61,6 +63,8 @@ public class AuthService implements AuthServiceInterface {
 
     @Override
     public final AuthResponse login(LoginRequest loginRequest) {
+        ArgumentValidator.throwIfNull(loginRequest);
+
         log.info("Logging user with data: \n{}", loginRequest);
 
         String username = loginRequest.username();

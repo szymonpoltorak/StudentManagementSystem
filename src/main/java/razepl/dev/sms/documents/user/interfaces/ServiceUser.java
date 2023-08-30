@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.user.interfaces;
+package razepl.dev.sms.documents.user.interfaces;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,7 +13,7 @@ public interface ServiceUser extends UserDetails, UserPropertyInterface {
      *
      * @return the ID of this user
      */
-    long getUserId();
+    String getUserId();
 
     /**
      * Returns the age of this user in years.

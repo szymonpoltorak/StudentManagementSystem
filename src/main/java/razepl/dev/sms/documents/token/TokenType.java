@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.token;
+package razepl.dev.sms.documents.token;
 
 /**
  * An enumeration representing types of tokens in application.

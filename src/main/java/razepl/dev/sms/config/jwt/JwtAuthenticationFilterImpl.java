@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import razepl.dev.sms.config.jwt.interfaces.JwtAuthenticationFilter;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
-import razepl.dev.sms.entities.token.interfaces.TokenRepository;
+import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 
 
 import java.io.IOException;

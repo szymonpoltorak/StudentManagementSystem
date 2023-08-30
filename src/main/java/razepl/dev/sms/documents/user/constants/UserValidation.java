@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.user.constants;
+package razepl.dev.sms.documents.user.constants;
 
 import java.util.regex.Pattern;
 

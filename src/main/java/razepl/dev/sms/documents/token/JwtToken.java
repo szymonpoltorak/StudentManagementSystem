@@ -1,4 +1,4 @@
-package razepl.dev.sms.entities.token;
+package razepl.dev.sms.documents.token;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import razepl.dev.sms.entities.token.interfaces.Token;
-import razepl.dev.sms.entities.user.User;
+import razepl.dev.sms.documents.token.interfaces.Token;
+import razepl.dev.sms.documents.user.User;
 
 /**
  * Entity class that is mapped for a table in database representing JWT tokens.
@@ -17,10 +17,11 @@ import razepl.dev.sms.entities.user.User;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "jwt_tokens")
 public class JwtToken implements Token {
     @Id
-    private long tokenId;
+    private String tokenId;
 
     @NotNull
     private String token;
