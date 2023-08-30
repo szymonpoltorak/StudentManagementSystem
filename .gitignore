@@ -1,12 +1,14 @@
 HELP.md
 .gradle
 build/
+backup
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 gradle
 gradlew
 gradlew.bat
+Lol.java
 
 ### STS ###
 .apt_generated

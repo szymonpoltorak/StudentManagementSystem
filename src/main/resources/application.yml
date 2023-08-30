@@ -1,0 +1,22 @@
+server:
+    port: 8080
+
+logging:
+    level:
+        org.springframework.web: INFO
+
+security:
+    jwt:
+        expiration-time: 86400000
+        refresh-time: 604800000
+        encoding-key: 25442A472D4B6150645367566B597033733676397924423F4528482B4D625165
+
+spring:
+    data:
+        mongodb:
+            username: root
+            password: none
+            authentication-database: admin
+            database: sms
+            port: 27017
+            host: localhost
