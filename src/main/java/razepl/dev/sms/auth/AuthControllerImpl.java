@@ -4,47 +4,48 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import razepl.dev.sms.auth.data.*;
 import razepl.dev.sms.auth.interfaces.AuthController;
-import razepl.dev.sms.auth.interfaces.AuthServiceInterface;
-
-import static razepl.dev.sms.auth.constants.AuthMappings.*;
+import razepl.dev.sms.auth.interfaces.AuthService;
 
 /**
  * Class to control auth endpoints.
  * It implements {@link AuthController}.
  */
-@RequiredArgsConstructor
-@RestController
-@RequestMapping(value = AUTH_MAPPING)
+@Controller
 @Tag(name = "User authentication")
+@RequiredArgsConstructor
 public class AuthControllerImpl implements AuthController {
-    private final AuthServiceInterface authService;
+    private final AuthService authService;
 
     @Override
-    @PostMapping(value = REGISTER_MAPPING)
+    @MutationMapping(value = "registerUser")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public final AuthResponse registerUser(@RequestBody RegisterRequest registerRequest) {
+    public final AuthResponse registerUser(@Argument RegisterRequest registerRequest) {
         return authService.register(registerRequest);
     }
 
     @Override
-    @PostMapping(value = LOGIN_MAPPING)
-    public final AuthResponse loginUser(@RequestBody LoginRequest loginRequest) {
+    @MutationMapping(value = "loginUser")
+    public final AuthResponse loginUser(@Argument LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
     @Override
-    @PostMapping(value = REFRESH_MAPPING)
+    @MutationMapping(value = "refreshUserToken")
     public final AuthResponse refreshUserToken(HttpServletRequest request, HttpServletResponse response) {
         return authService.refreshToken(request, response);
     }
 
     @Override
-    @PostMapping(value = AUTHENTICATE_MAPPING)
-    public final TokenResponse authenticateUser(@RequestBody TokenRequest request) {
-        return authService.validateUsersTokens(request);
+    @QueryMapping(value = "authenticateUser")
+    public final TokenResponse authenticateUser(@Argument TokenRequest tokenRequest) {
+        return authService.validateUsersTokens(tokenRequest);
     }
 }

@@ -7,7 +7,7 @@ import razepl.dev.sms.auth.data.*;
 /**
  * This interface provides methods for user authentication and authorization.
  */
-public interface AuthServiceInterface {
+public interface AuthService {
     /**
      * Registers a user with the provided registration request data.
      *

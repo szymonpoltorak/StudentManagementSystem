@@ -12,13 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.ArgumentValidator;
 import razepl.dev.sms.auth.data.*;
-import razepl.dev.sms.auth.interfaces.AuthServiceInterface;
+import razepl.dev.sms.auth.interfaces.AuthService;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static razepl.dev.sms.documents.user.constants.UserValidation.PASSWORD_PATTERN;
@@ -26,12 +27,12 @@ import static razepl.dev.sms.documents.user.constants.UserValidationMessages.PAS
 
 /**
  * Class to manage logic for {@link AuthControllerImpl}.
- * It implements {@link AuthServiceInterface}.
+ * It implements {@link AuthService}.
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthService implements AuthServiceInterface {
+public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -50,7 +51,7 @@ public class AuthService implements AuthServiceInterface {
                 .builder()
                 .name(registerRequest.name())
                 .email(registerRequest.email())
-                .dateOfBirth(registerRequest.dateOfBirth())
+                .dateOfBirth(LocalDate.parse(registerRequest.dateOfBirth()))
                 .surname(registerRequest.surname())
                 .password(passwordEncoder.encode(password))
                 .build();
