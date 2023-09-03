@@ -20,7 +20,7 @@ public class AuthTestUtil {
     private static RegisterRequest buildUserRequest(LocalDate dateOfBirth, String name, String surname, String email, String password) {
         return RegisterRequest
                 .builder()
-                .dateOfBirth(dateOfBirth)
+                .dateOfBirth(String.valueOf(dateOfBirth))
                 .name(name)
                 .surname(surname)
                 .email(email)

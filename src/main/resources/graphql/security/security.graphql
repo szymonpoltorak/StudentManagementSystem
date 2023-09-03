@@ -3,7 +3,7 @@ type Mutation {
 
     loginUser(loginRequest: LoginRequest): AuthResponse
 
-    refreshUserToken: AuthResponse
+    refreshUserToken(refreshToken: String): AuthResponse
 }
 
 type Query {

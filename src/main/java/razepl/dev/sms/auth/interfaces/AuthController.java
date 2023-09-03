@@ -63,8 +63,7 @@ public interface AuthController {
     /**
      * Refreshes a user's authentication token using their refresh token.
      *
-     * @param request  The HTTP servlet request containing the refresh token in the Authorization header.
-     * @param response The HTTP servlet response to add the new authentication and refresh tokens to.
+     * @param refreshToken  The jwt refresh token.
      * @return A ResponseEntity containing an {@link AuthResponse} object with the new authentication and refresh tokens.
      */
     @Operation(
@@ -81,7 +80,7 @@ public interface AuthController {
                     )
             }
     )
-    AuthResponse refreshUserToken(HttpServletRequest request, HttpServletResponse response);
+    AuthResponse refreshUserToken(String refreshToken);
 
     /**
      * Authenticates a user with the given token request.

@@ -71,7 +71,7 @@ class AuthServiceTest {
                 .name("John")
                 .surname("Doe")
                 .email("john.doe@example.com")
-                .dateOfBirth(LocalDate.of(1990, 1, 1))
+                .dateOfBirth(String.valueOf(LocalDate.of(1990, 1, 1)))
                 .password("plinPword123123#?!")
                 .build();
 
@@ -104,7 +104,7 @@ class AuthServiceTest {
                 .name("John")
                 .surname("Doe")
                 .email("john.doe@example.com")
-                .dateOfBirth(LocalDate.of(1990, 1, 1))
+                .dateOfBirth(String.valueOf(LocalDate.of(1990, 1, 1)))
                 .password("nope")
                 .build();
 
@@ -158,10 +158,8 @@ class AuthServiceTest {
     @Test
     final void test_refreshToken_should_return_new_tokens_if_refresh_token_is_valid() {
         // given
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
+        String refreshToken = "refreshToken";
 
-        when(jwtService.getJwtRefreshToken(request)).thenReturn("refreshToken");
         when(jwtService.getUsernameFromToken("refreshToken")).thenReturn("john.doe@example.com");
 
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
@@ -170,7 +168,7 @@ class AuthServiceTest {
         when(tokenManager.buildTokensIntoResponse(anyString(), anyString())).thenReturn(AuthResponse.builder().build());
 
         // when
-        AuthResponse authResponse = authService.refreshToken(request, response);
+        AuthResponse authResponse = authService.refreshToken(refreshToken);
 
         // then
         assertNotNull(authResponse);
@@ -182,15 +180,12 @@ class AuthServiceTest {
     @Test
     final void test_refreshToken_should_throw_exception_if_refresh_token_does_not_exist() {
         // given
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
-        when(jwtService.getJwtRefreshToken(request)).thenReturn(null);
+        String refreshToken = null;
 
         // when
 
         // then
-        assertThrows(TokenDoesNotExistException.class, () -> authService.refreshToken(request, response));
+        assertThrows(NullArgumentException.class, () -> authService.refreshToken(refreshToken));
         verify(tokenManager, never()).revokeUserTokens(any(User.class));
         verify(tokenManager, never()).saveUsersToken(anyString(), any(User.class));
         verify(tokenManager, never()).buildTokensIntoResponse(anyString(), anyString());
@@ -199,10 +194,8 @@ class AuthServiceTest {
     @Test
     final void test_refreshToken_should_throw_exception_if_user_does_not_exist() {
         // given
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
+        String refreshToken = "refreshToken";
 
-        when(jwtService.getJwtRefreshToken(request)).thenReturn("refreshToken");
         when(jwtService.getUsernameFromToken("refreshToken")).thenReturn("john.doe@example.com");
 
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
@@ -210,7 +203,7 @@ class AuthServiceTest {
         // when
 
         // then
-        assertThrows(UsernameNotFoundException.class, () -> authService.refreshToken(request, response));
+        assertThrows(UsernameNotFoundException.class, () -> authService.refreshToken(refreshToken));
         verify(tokenManager, never()).revokeUserTokens(any(User.class));
         verify(tokenManager, never()).saveUsersToken(anyString(), any(User.class));
         verify(tokenManager, never()).buildTokensIntoResponse(anyString(), anyString());
@@ -219,10 +212,8 @@ class AuthServiceTest {
     @Test
     final void test_refreshToken_should_throw_exception_if_refresh_token_is_invalid() {
         // given
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
+        String refreshToken = "refreshToken";
 
-        when(jwtService.getJwtRefreshToken(request)).thenReturn("refreshToken");
         when(jwtService.getUsernameFromToken("refreshToken")).thenReturn("john.doe@example.com");
 
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
@@ -231,7 +222,7 @@ class AuthServiceTest {
         // when
 
         // then
-        assertThrows(InvalidTokenException.class, () -> authService.refreshToken(request, response));
+        assertThrows(InvalidTokenException.class, () -> authService.refreshToken(refreshToken));
         verify(tokenManager, never()).revokeUserTokens(any(User.class));
         verify(tokenManager, never()).saveUsersToken(anyString(), any(User.class));
         verify(tokenManager, never()).buildTokensIntoResponse(anyString(), anyString());
@@ -287,13 +278,14 @@ class AuthServiceTest {
         // when
 
         // then
-        Assertions.assertThrows(NullArgumentException.class, () -> authService.refreshToken(null, null));
+        Assertions.assertThrows(NullArgumentException.class, () -> authService.refreshToken(null));
     }
 
     @Test
     final void test_register_wrong_password() {
         // given
-        RegisterRequest request = new RegisterRequest("name", "surname", "email", "password", LocalDate.now());
+        RegisterRequest request = new RegisterRequest("name", "surname", "email",
+                "password", String.valueOf(LocalDate.now()));
 
         // when
 

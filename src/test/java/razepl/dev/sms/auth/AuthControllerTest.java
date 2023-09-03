@@ -187,6 +187,6 @@ class AuthControllerTest {
         // when
 
         // then
-        Assertions.assertThrows(NullArgumentException.class, () -> authInterface.refreshUserToken(null, null));
+        Assertions.assertThrows(NullArgumentException.class, () -> authInterface.refreshUserToken(null));
     }
 }

@@ -27,11 +27,10 @@ public interface AuthService {
     /**
      * Refreshes a user's authentication token using their refresh token.
      *
-     * @param request  The HTTP servlet request containing the refresh token in the Authorization header.
-     * @param response The HTTP servlet response to add the new authentication and refresh tokens to.
+     * @param refreshToken jwt refresh token.
      * @return An AuthResponse object with the new authentication and refresh tokens.
      */
-    AuthResponse refreshToken(HttpServletRequest request, HttpServletResponse response);
+    AuthResponse refreshToken(String refreshToken);
 
     /**
      * Validates the user's tokens using the given token request.

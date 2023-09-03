@@ -39,8 +39,8 @@ public class AuthControllerImpl implements AuthController {
 
     @Override
     @MutationMapping(value = "refreshUserToken")
-    public final AuthResponse refreshUserToken(HttpServletRequest request, HttpServletResponse response) {
-        return authService.refreshToken(request, response);
+    public final AuthResponse refreshUserToken(@Argument String refreshToken) {
+        return authService.refreshToken(refreshToken);
     }
 
     @Override

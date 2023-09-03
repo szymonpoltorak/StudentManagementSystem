@@ -86,10 +86,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public final AuthResponse refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        ArgumentValidator.throwIfNull(request, response);
-
-        String refreshToken = jwtService.getJwtRefreshToken(request);
+    public final AuthResponse refreshToken(String refreshToken) {
+        ArgumentValidator.throwIfNull(refreshToken);
 
         log.info("Refresh token : {}", refreshToken);
 
@@ -111,7 +109,8 @@ public class AuthServiceImpl implements AuthService {
 
         log.info("Authenticating user with data:\n{}", request);
 
-        JwtToken jwtToken = tokenRepository.findByToken(request.authToken()).orElseThrow();
+        JwtToken jwtToken = tokenRepository.findByToken(request.authToken())
+                .orElseThrow(TokensUserNotFoundException::new);
 
         boolean isAuthTokenValid = jwtService.isTokenValid(request.authToken(), jwtToken.getUser());
 
