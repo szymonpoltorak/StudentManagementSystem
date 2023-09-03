@@ -16,6 +16,7 @@ import razepl.dev.sms.config.interfaces.SecurityConfiguration;
 import razepl.dev.sms.config.jwt.interfaces.JwtAuthenticationFilter;
 
 import static razepl.dev.sms.config.constants.Matchers.LOGOUT_URL;
+import static razepl.dev.sms.config.constants.Matchers.WHITE_LIST;
 
 @Configuration
 @EnableWebSecurity
@@ -31,7 +32,7 @@ public class SecurityConfigurationImpl implements SecurityConfiguration {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/**")
+                        .requestMatchers(WHITE_LIST)
                         .permitAll()
                         .anyRequest()
                         .authenticated()

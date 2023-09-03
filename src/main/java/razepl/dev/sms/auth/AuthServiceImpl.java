@@ -15,6 +15,8 @@ import razepl.dev.sms.auth.data.*;
 import razepl.dev.sms.auth.interfaces.AuthService;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
+import razepl.dev.sms.documents.token.JwtToken;
+import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.*;
@@ -34,6 +36,7 @@ import static razepl.dev.sms.documents.user.constants.UserValidationMessages.PAS
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenManagerService tokenManager;
@@ -108,11 +111,11 @@ public class AuthServiceImpl implements AuthService {
 
         log.info("Authenticating user with data:\n{}", request);
 
-        User user = userRepository.findUserByToken(request.authToken()).orElseThrow(TokensUserNotFoundException::new);
+        JwtToken jwtToken = tokenRepository.findByToken(request.authToken()).orElseThrow();
 
-        boolean isAuthTokenValid = jwtService.isTokenValid(request.authToken(), user);
+        boolean isAuthTokenValid = jwtService.isTokenValid(request.authToken(), jwtToken.getUser());
 
-        log.info("Is token valid : {}\nFor user : {}", isAuthTokenValid, user);
+        log.info("Is token valid : {}\nFor user : {}", isAuthTokenValid, jwtToken.getUser());
 
         return TokenResponse
                 .builder()
