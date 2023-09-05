@@ -19,6 +19,7 @@ import razepl.dev.sms.auth.data.RegisterRequest;
 import razepl.dev.sms.auth.data.TokenRequest;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
+import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.*;
@@ -35,6 +36,9 @@ import static org.mockito.Mockito.*;
 class AuthServiceTest {
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private TokenRepository tokenRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
