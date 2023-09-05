@@ -1,19 +1,24 @@
 package razepl.dev.sms.auth;
 
+import graphql.ErrorClassification;
+import graphql.GraphQLError;
+import graphql.language.SourceLocation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import razepl.dev.sms.auth.data.ExceptionResponse;
-import razepl.dev.sms.auth.data.TokenResponse;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import razepl.dev.sms.auth.interfaces.AuthExceptionInterface;
 import razepl.dev.sms.exceptions.*;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static razepl.dev.sms.auth.constants.AuthMessages.ERROR_DELIMITER;
@@ -27,8 +32,9 @@ import static razepl.dev.sms.auth.constants.AuthMessages.ERROR_FORMAT;
 @ControllerAdvice
 public class AuthExceptionHandler implements AuthExceptionInterface {
     @Override
-    @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<ExceptionResponse> handleConstraintValidationExceptions(ConstraintViolationException exception) {
+    @GraphQlExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    public final GraphQLError handleConstraintValidationExceptions(ConstraintViolationException exception) {
         String className = exception.getClass().getSimpleName();
         String errorMessage = exception.getConstraintViolations()
                 .stream()
@@ -37,12 +43,13 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
 
         log.error("Exception class name : {}\nError message : {}", className, errorMessage);
 
-        return new ResponseEntity<>(buildResponse(errorMessage, className), HttpStatus.UNPROCESSABLE_ENTITY);
+        return buildResponse(errorMessage, className);
     }
 
     @Override
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public final ResponseEntity<ExceptionResponse> handleMethodArgValidExceptions(MethodArgumentNotValidException exception) {
+    @GraphQlExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    public final GraphQLError handleMethodArgValidExceptions(MethodArgumentNotValidException exception) {
         String className = exception.getClass().getSimpleName();
         String errorMessage = exception.getBindingResult()
                 .getFieldErrors()
@@ -52,63 +59,76 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
 
         log.error("Exception class name : {}\nError message : {}", className, errorMessage);
 
-        return new ResponseEntity<>(buildResponse(errorMessage, className), HttpStatus.UNPROCESSABLE_ENTITY);
+        return buildResponse(errorMessage, className);
     }
 
     @Override
-    @ExceptionHandler(PasswordValidationException.class)
-    public final ResponseEntity<ExceptionResponse> handlePasswordValidationException(ValidationException exception) {
-        return buildResponseEntity(exception, HttpStatus.UNPROCESSABLE_ENTITY);
+    @GraphQlExceptionHandler(PasswordValidationException.class)
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    public final GraphQLError handlePasswordValidationException(ValidationException exception) {
+        return buildResponse(exception.getMessage(), exception.getClass().getSimpleName());
     }
 
     @Override
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> handleUserNotFoundException(UsernameNotFoundException exception) {
-        return buildResponseEntity(exception, HttpStatus.NOT_FOUND);
+    @GraphQlExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public final GraphQLError handleUserNotFoundException(UsernameNotFoundException exception) {
+        return buildResponse(exception.getMessage(), exception.getClass().getSimpleName());
     }
 
     @Override
-    @ExceptionHandler(AuthManagerInstanceException.class)
-    public final ResponseEntity<ExceptionResponse> handleAuthManagerInstanceException(InstantiationException exception) {
-        return buildResponseEntity(exception, HttpStatus.FAILED_DEPENDENCY);
+    @GraphQlExceptionHandler(AuthManagerInstanceException.class)
+    @ResponseStatus(value = HttpStatus.FAILED_DEPENDENCY)
+    public final GraphQLError handleAuthManagerInstanceException(InstantiationException exception) {
+        return buildResponse(exception.getMessage(), exception.getClass().getSimpleName());
     }
 
     @Override
-    @ExceptionHandler({InvalidTokenException.class, TokenDoesNotExistException.class, NullArgumentException.class})
-    public final ResponseEntity<ExceptionResponse> handleTokenExceptions(IllegalArgumentException exception) {
-        return buildResponseEntity(exception, HttpStatus.UNAUTHORIZED);
+    @GraphQlExceptionHandler({InvalidTokenException.class, TokenDoesNotExistException.class, NullArgumentException.class})
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public final GraphQLError handleTokenExceptions(IllegalArgumentException exception) {
+        return buildResponse(exception.getMessage(), exception.getClass().getSimpleName());
     }
 
     @Override
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public final ResponseEntity<ExceptionResponse> handleUserExistException(IllegalStateException exception) {
-        return buildResponseEntity(exception, HttpStatus.UNPROCESSABLE_ENTITY);
+    @GraphQlExceptionHandler({UserAlreadyExistsException.class})
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    public final GraphQLError handleUserExistException(UserAlreadyExistsException exception) {
+        return buildResponse(exception.getMessage(), exception.getClass().getSimpleName());
     }
 
     @Override
-    @ExceptionHandler(TokensUserNotFoundException.class)
-    public final ResponseEntity<TokenResponse> handleTokenExceptions(IllegalStateException exception) {
+    @GraphQlExceptionHandler(TokensUserNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public final GraphQLError handleTokenExceptions(TokensUserNotFoundException exception) {
         String className = exception.getClass().getSimpleName();
-        TokenResponse response = TokenResponse.builder().isAuthTokenValid(false).build();
 
         log.error("Exception class name : {}\nError message : {}", className, exception.getMessage());
 
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        return buildResponse(exception.getMessage(), className);
     }
 
-    private ResponseEntity<ExceptionResponse> buildResponseEntity(Exception exception, HttpStatus status) {
-        String errorMessage = exception.getMessage();
-        String className = exception.getClass().getSimpleName();
+    private GraphQLError buildResponse(String errorMessage, String className) {
+        return new GraphQLError() {
+            @Override
+            public String getMessage() {
+                return errorMessage;
+            }
 
-        log.error("Exception class name : {}\nError message : {}", className, errorMessage);
+            @Override
+            public Map<String, Object> getExtensions() {
+                return Collections.singletonMap("ClassName", className);
+            }
 
-        return new ResponseEntity<>(buildResponse(errorMessage, className), status);
-    }
+            @Override
+            public List<SourceLocation> getLocations() {
+                return null;
+            }
 
-    private ExceptionResponse buildResponse(String errorMessage, String exceptionClassName) {
-        return ExceptionResponse.builder()
-                .errorMessage(errorMessage)
-                .exceptionClassName(exceptionClassName)
-                .build();
+            @Override
+            public ErrorClassification getErrorType() {
+                return null;
+            }
+        };
     }
 }
