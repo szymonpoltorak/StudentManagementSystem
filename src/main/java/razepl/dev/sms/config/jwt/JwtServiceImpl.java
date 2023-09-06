@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import razepl.dev.sms.config.constants.Headers;
 import razepl.dev.sms.config.constants.Matchers;
 import razepl.dev.sms.config.constants.Properties;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
+import razepl.dev.sms.exceptions.TokenDoesNotExistException;
 
 import java.security.Key;
 import java.util.Collections;
@@ -108,11 +110,15 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private Claims getAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(buildSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(buildSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (SignatureException exception) {
+            throw new TokenDoesNotExistException(exception.getMessage());
+        }
     }
 
     private String buildToken(Map<String, Object> additionalClaims, UserDetails userDetails, long expiration) {

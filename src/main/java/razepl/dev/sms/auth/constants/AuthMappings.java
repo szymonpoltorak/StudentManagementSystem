@@ -5,26 +5,21 @@ package razepl.dev.sms.auth.constants;
  */
 public final class AuthMappings {
     /**
-     * The base mapping for authentication endpoints.
-     */
-    public static final String AUTH_MAPPING = "/api/auth/";
-
-    /**
      * The mapping for user registration endpoint.
      */
-    public static final String REGISTER_MAPPING = "/register";
+    public static final String REGISTER_MAPPING = "registerUser";
 
     /**
      * The mapping for user login endpoint.
      */
-    public static final String LOGIN_MAPPING = "/login";
+    public static final String LOGIN_MAPPING = "loginUser";
 
     /**
      * The mapping for user login endpoint.
      */
-    public static final String REFRESH_MAPPING = "/refreshToken";
+    public static final String REFRESH_MAPPING = "refreshUserToken";
 
-    public static final String AUTHENTICATE_MAPPING = "/authenticate";
+    public static final String AUTHENTICATE_MAPPING = "authenticateUser";
 
     /**
      * A private constructor to prevent instantiation of this class.

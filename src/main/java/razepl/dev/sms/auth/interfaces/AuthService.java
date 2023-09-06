@@ -1,7 +1,5 @@
 package razepl.dev.sms.auth.interfaces;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import razepl.dev.sms.auth.data.*;
 
 /**
