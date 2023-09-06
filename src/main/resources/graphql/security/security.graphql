@@ -1,0 +1,11 @@
+type Mutation {
+    registerUser(registerRequest: RegisterRequest): AuthResponse
+
+    loginUser(loginRequest: LoginRequest): AuthResponse
+
+    refreshUserToken(refreshToken: String): AuthResponse
+}
+
+type Query {
+    authenticateUser(tokenRequest: TokenRequest): TokenResponse
+}

@@ -1,13 +1,11 @@
 package razepl.dev.sms.auth.interfaces;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import razepl.dev.sms.auth.data.*;
 
 /**
  * This interface provides methods for user authentication and authorization.
  */
-public interface AuthServiceInterface {
+public interface AuthService {
     /**
      * Registers a user with the provided registration request data.
      *
@@ -27,11 +25,10 @@ public interface AuthServiceInterface {
     /**
      * Refreshes a user's authentication token using their refresh token.
      *
-     * @param request  The HTTP servlet request containing the refresh token in the Authorization header.
-     * @param response The HTTP servlet response to add the new authentication and refresh tokens to.
+     * @param refreshToken jwt refresh token.
      * @return An AuthResponse object with the new authentication and refresh tokens.
      */
-    AuthResponse refreshToken(HttpServletRequest request, HttpServletResponse response);
+    AuthResponse refreshToken(String refreshToken);
 
     /**
      * Validates the user's tokens using the given token request.

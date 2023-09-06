@@ -36,7 +36,7 @@ public class LogoutService implements LogoutHandler {
             return;
         }
         String jwt = authHeader.substring(TOKEN_START_INDEX);
-        
+
         JwtToken token = tokenRepository.findByToken(jwt).orElseThrow(
                 () -> new TokenDoesNotExistException("Jwt in header: {}\nToken is null")
         );

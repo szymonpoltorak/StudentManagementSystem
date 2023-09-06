@@ -1,0 +1,750 @@
+{
+	"info": {
+		"_postman_id": "475d544b-57bc-463c-a685-6ac9dca80edc",
+		"name": "StudentManagementSystem",
+		"description": "Student management system written with Spring Boot. Made to learn technologies like GraphQL, MongoDB and Gradle.  \nApplication consists of graphql api only for now but I may add frontend in future.\n\n## Technology stack\n\n- Java 17,\n- Spring Boot,\n- Gradle Groovy,\n- GraphQL,\n- MongoDB,\n- Mongo Express,\n- Docker,\n- Jwt,\n- Postman,\n- Junit,\n- Mockito",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28494266"
+	},
+	"item": [
+		{
+			"name": "RegisterUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    registerUser (\r\n        registerRequest: {\r\n            name: \"Jacek\",\r\n            surname: \"Kowalski\",\r\n            email: \"jacek@gmail.com\",\r\n            dateOfBirth: \"2000-01-01\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ){\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RegisterUser - successful register process",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    registerUser (\r\n        registerRequest: {\r\n            name: \"Jacek\",\r\n            surname: \"Kowalski\",\r\n            email: \"jacek@gmail.com\",\r\n            dateOfBirth: \"2000-01-01\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ){\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:14:17 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"registerUser\": {\n            \"authToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY4NTcsImV4cCI6MTY5NDEwMzI1N30.misoE15vQp9Jsf4cbl-tVghKzcP6o8FVBiaVT2w6jgg\",\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY4NTcsImV4cCI6MTY5NDYyMTY1N30.-vUs7iKG0SkVm2evzernYSSnJunamDvBvNFH4hP--Us\"\n        }\n    }\n}"
+				},
+				{
+					"name": "RegisterUser - user already exists",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    registerUser (\r\n        registerRequest: {\r\n            name: \"Jacek\",\r\n            surname: \"Kowalski\",\r\n            email: \"jacek@gmail.com\",\r\n            dateOfBirth: \"2000-01-01\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ){\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:14:40 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"User already exists!\",\n            \"extensions\": {\n                \"ClassName\": \"UserAlreadyExistsException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"registerUser\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "AuthenticateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    authenticateUser(\r\n        tokenRequest: {\r\n            authToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDEwMzM5MH0.GqY2Xb5jc1e0z5YGPpGnDpdUXYW1fVMBgtYHjAgUTf7\"\r\n        }\r\n    ) {\r\n        isAuthTokenValid\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AuthenticateUser - correct token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    authenticateUser(\r\n        tokenRequest: {\r\n            authToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDEwMzM5MH0.GqY2Xb5jc1e0z5YGPpGnDpdUXYW1fVMBgtYHjAgUTf8\"\r\n        }\r\n    ) {\r\n        isAuthTokenValid\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:17:33 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"authenticateUser\": {\n            \"isAuthTokenValid\": true\n        }\n    }\n}"
+				},
+				{
+					"name": "AuthenticateUser - wrong token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    authenticateUser(\r\n        tokenRequest: {\r\n            authToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDEwMzM5MH0.GqY2Xb5jc1e0z5YGPpGnDpdUXYW1fVMBgtYHjAgUTf7\"\r\n        }\r\n    ) {\r\n        isAuthTokenValid\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:17:55 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": null,\n            \"extensions\": {\n                \"ClassName\": \"TokensUserNotFoundException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"authenticateUser\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKa\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login - success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:16:30 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"loginUser\": {\n            \"authToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDEwMzM5MH0.GqY2Xb5jc1e0z5YGPpGnDpdUXYW1fVMBgtYHjAgUTf8\",\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLC6Lo\"\n        }\n    }\n}"
+				},
+				{
+					"name": "Login - wrong credentials",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKa\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:16:45 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Unauthorized\",\n            \"locations\": [\n                {\n                    \"line\": 2,\n                    \"column\": 5\n                }\n            ],\n            \"path\": [\n                \"loginUser\"\n            ],\n            \"extensions\": {\n                \"classification\": \"UNAUTHORIZED\"\n            }\n        }\n    ],\n    \"data\": {\n        \"loginUser\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "RefreshToken",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    refreshUserToken(\r\n        refreshToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLCaso\"\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RefreshToken - successful refreshing token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    refreshUserToken(\r\n        refreshToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLC6Lo\"\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:19:16 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"refreshUserToken\": {\n            \"authToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTcxNTYsImV4cCI6MTY5NDEwMzU1Nn0.Z0QJRQj1bqM1gUHVs0Jfpm9FY-B7IRNSoh4WvkkNbhk\",\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLC6Lo\"\n        }\n    }\n}"
+				},
+				{
+					"name": "RefreshToken -  refreshing not existing token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    refreshUserToken(\r\n        refreshToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLCaso\"\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Sep 2023 16:22:59 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.\",\n            \"extensions\": {\n                \"ClassName\": \"TokenDoesNotExistException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"refreshUserToken\": null\n    }\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

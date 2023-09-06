@@ -17,7 +17,6 @@ import razepl.dev.sms.config.jwt.interfaces.JwtAuthenticationFilter;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 
-
 import java.io.IOException;
 
 /**

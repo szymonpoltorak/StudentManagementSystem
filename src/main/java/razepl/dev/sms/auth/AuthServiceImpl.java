@@ -1,7 +1,5 @@
 package razepl.dev.sms.auth;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +10,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.ArgumentValidator;
 import razepl.dev.sms.auth.data.*;
-import razepl.dev.sms.auth.interfaces.AuthServiceInterface;
+import razepl.dev.sms.auth.interfaces.AuthService;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
+import razepl.dev.sms.documents.token.JwtToken;
+import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static razepl.dev.sms.documents.user.constants.UserValidation.PASSWORD_PATTERN;
@@ -26,13 +27,14 @@ import static razepl.dev.sms.documents.user.constants.UserValidationMessages.PAS
 
 /**
  * Class to manage logic for {@link AuthControllerImpl}.
- * It implements {@link AuthServiceInterface}.
+ * It implements {@link AuthService}.
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthService implements AuthServiceInterface {
+public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenManagerService tokenManager;
@@ -50,7 +52,7 @@ public class AuthService implements AuthServiceInterface {
                 .builder()
                 .name(registerRequest.name())
                 .email(registerRequest.email())
-                .dateOfBirth(registerRequest.dateOfBirth())
+                .dateOfBirth(LocalDate.parse(registerRequest.dateOfBirth()))
                 .surname(registerRequest.surname())
                 .password(passwordEncoder.encode(password))
                 .build();
@@ -82,10 +84,8 @@ public class AuthService implements AuthServiceInterface {
     }
 
     @Override
-    public final AuthResponse refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        ArgumentValidator.throwIfNull(request, response);
-
-        String refreshToken = jwtService.getJwtRefreshToken(request);
+    public final AuthResponse refreshToken(String refreshToken) {
+        ArgumentValidator.throwIfNull(refreshToken);
 
         log.info("Refresh token : {}", refreshToken);
 
@@ -107,11 +107,12 @@ public class AuthService implements AuthServiceInterface {
 
         log.info("Authenticating user with data:\n{}", request);
 
-        User user = userRepository.findUserByToken(request.authToken()).orElseThrow(TokensUserNotFoundException::new);
+        JwtToken jwtToken = tokenRepository.findByToken(request.authToken())
+                .orElseThrow(TokensUserNotFoundException::new);
 
-        boolean isAuthTokenValid = jwtService.isTokenValid(request.authToken(), user);
+        boolean isAuthTokenValid = jwtService.isTokenValid(request.authToken(), jwtToken.getUser());
 
-        log.info("Is token valid : {}\nFor user : {}", isAuthTokenValid, user);
+        log.info("Is token valid : {}\nFor user : {}", isAuthTokenValid, jwtToken.getUser());
 
         return TokenResponse
                 .builder()

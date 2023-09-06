@@ -5,17 +5,6 @@ package razepl.dev.sms.auth.constants;
  * These messages are used to provide feedback to users during the authentication process.
  */
 public final class AuthMessages {
-
-    /**
-     * Message indicating that a new user has been added to the user repository.
-     */
-    public static final String ADDED_INFO = "Added user to userRepository.";
-
-    /**
-     * Message indicating that a user has been successfully registered.
-     */
-    public static final String SUCCESSFUL_REGISTER = "User has been successfully registered!";
-
     /**
      * Delimiter string used to separate error messages.
      */

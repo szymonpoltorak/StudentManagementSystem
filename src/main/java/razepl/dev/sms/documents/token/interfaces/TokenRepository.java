@@ -29,17 +29,17 @@ public interface TokenRepository extends MongoRepository<JwtToken, String> {
      * @return List of {@link JwtToken} of the user
      */
     @Query("""
-    {
-        'user.userId': ?0,
-        $or: [
             {
-                'isExpired': false
-            },
-            {
-                'isRevoked': false
+                'user.userId': ?0,
+                $or: [
+                    {
+                        'isExpired': false
+                    },
+                    {
+                        'isRevoked': false
+                    }
+                ]
             }
-        ]
-    }
-    """)
+            """)
     List<JwtToken> findAllValidTokensByUserId(String id);
 }

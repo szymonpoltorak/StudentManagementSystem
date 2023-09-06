@@ -16,7 +16,6 @@ import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.NullArgumentException;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
