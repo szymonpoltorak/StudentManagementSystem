@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth;
+package razepl.dev.sms.api.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.ArgumentValidator;
-import razepl.dev.sms.auth.data.*;
-import razepl.dev.sms.auth.interfaces.AuthService;
+import razepl.dev.sms.api.auth.data.*;
+import razepl.dev.sms.api.auth.interfaces.AuthService;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.token.JwtToken;

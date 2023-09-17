@@ -1,6 +1,6 @@
-package razepl.dev.sms.auth.interfaces;
+package razepl.dev.sms.api.auth.interfaces;
 
-import razepl.dev.sms.auth.data.*;
+import razepl.dev.sms.api.auth.data.*;
 
 /**
  * This interface provides methods for user authentication and authorization.

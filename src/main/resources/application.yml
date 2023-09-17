@@ -34,4 +34,4 @@ spring:
             authentication-database: admin
             database: sms
             port: 27017
-            host: localhost
+            host: ${_MONGO_HOST}

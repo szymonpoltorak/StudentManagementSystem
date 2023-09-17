@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth;
+package razepl.dev.sms.api.auth;
 
 import graphql.ErrorClassification;
 import graphql.GraphQLError;
@@ -10,16 +10,14 @@ import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandle
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import razepl.dev.sms.auth.interfaces.AuthExceptionInterface;
+import razepl.dev.sms.api.auth.constants.AuthMessages;
+import razepl.dev.sms.api.auth.interfaces.AuthExceptionInterface;
 import razepl.dev.sms.exceptions.*;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static razepl.dev.sms.auth.constants.AuthMessages.ERROR_DELIMITER;
-import static razepl.dev.sms.auth.constants.AuthMessages.ERROR_FORMAT;
 
 /**
  * Class created to handle various exceptions that can be thrown in auth endpoints.
@@ -34,8 +32,8 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
         String className = exception.getClass().getSimpleName();
         String errorMessage = exception.getConstraintViolations()
                 .stream()
-                .map(error -> String.format(ERROR_FORMAT, error.getPropertyPath(), error.getMessage()))
-                .collect(Collectors.joining(ERROR_DELIMITER));
+                .map(error -> String.format(AuthMessages.ERROR_FORMAT, error.getPropertyPath(), error.getMessage()))
+                .collect(Collectors.joining(AuthMessages.ERROR_DELIMITER));
 
         return buildResponse(errorMessage, className);
     }
@@ -47,8 +45,8 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
         String errorMessage = exception.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(error -> String.format(ERROR_FORMAT, error.getField(), error.getDefaultMessage()))
-                .collect(Collectors.joining(ERROR_DELIMITER));
+                .map(error -> String.format(AuthMessages.ERROR_FORMAT, error.getField(), error.getDefaultMessage()))
+                .collect(Collectors.joining(AuthMessages.ERROR_DELIMITER));
 
         return buildResponse(errorMessage, className);
     }

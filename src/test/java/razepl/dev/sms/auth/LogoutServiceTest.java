@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import razepl.dev.sms.api.auth.LogoutService;
 import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 
