@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth;
+package razepl.dev.sms.api.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

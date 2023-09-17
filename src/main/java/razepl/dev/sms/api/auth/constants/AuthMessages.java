@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth.constants;
+package razepl.dev.sms.api.auth.constants;
 
 /**
  * The AuthMessages class contains constant string messages related to user authentication.

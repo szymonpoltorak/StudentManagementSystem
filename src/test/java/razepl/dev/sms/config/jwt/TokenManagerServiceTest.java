@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import razepl.dev.sms.auth.data.AuthResponse;
+import razepl.dev.sms.api.auth.data.AuthResponse;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.token.JwtToken;

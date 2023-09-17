@@ -3,7 +3,7 @@ package razepl.dev.sms.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import razepl.dev.sms.auth.data.RegisterRequest;
+import razepl.dev.sms.api.auth.data.RegisterRequest;
 import razepl.dev.sms.exceptions.JsonMapperException;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth.constants;
+package razepl.dev.sms.api.auth.constants;
 
 /**
  * A utility class that contains constants for authentication mappings.

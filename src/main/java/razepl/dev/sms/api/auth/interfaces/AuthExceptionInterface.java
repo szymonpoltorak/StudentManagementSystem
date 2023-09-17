@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth.interfaces;
+package razepl.dev.sms.api.auth.interfaces;
 
 import graphql.GraphQLError;
 import jakarta.validation.ConstraintViolationException;

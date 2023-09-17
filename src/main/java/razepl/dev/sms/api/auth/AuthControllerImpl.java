@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth;
+package razepl.dev.sms.api.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -7,11 +7,11 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import razepl.dev.sms.auth.data.*;
-import razepl.dev.sms.auth.interfaces.AuthController;
-import razepl.dev.sms.auth.interfaces.AuthService;
+import razepl.dev.sms.api.auth.data.*;
+import razepl.dev.sms.api.auth.interfaces.AuthController;
+import razepl.dev.sms.api.auth.interfaces.AuthService;
 
-import static razepl.dev.sms.auth.constants.AuthMappings.*;
+import static razepl.dev.sms.api.auth.constants.AuthMappings.*;
 
 /**
  * Class to control auth endpoints.

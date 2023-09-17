@@ -1,6 +1,6 @@
 package razepl.dev.sms.config.jwt.interfaces;
 
-import razepl.dev.sms.auth.data.AuthResponse;
+import razepl.dev.sms.api.auth.data.AuthResponse;
 import razepl.dev.sms.documents.user.User;
 
 /**
