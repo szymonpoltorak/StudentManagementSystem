@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class AuthServiceTest {
     @Mock
     private UserRepository userRepository;
