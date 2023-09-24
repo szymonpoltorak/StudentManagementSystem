@@ -33,9 +33,8 @@ jobs:
 
             -   name: Build Gradle actions
                 uses: gradle/gradle-build-action@v2.8.0
-#                with:
-#                    gradle-version: '8.2'
-#                    arguments: build
-#                    build-file: 'build.gradle'
-            -   name: Build with Gradle
-                run: ./gradlew build
+                with:
+                    gradle-version: '8.2'
+                    arguments: build
+#            -   name: Build with Gradle
+#                run: ./gradlew build
