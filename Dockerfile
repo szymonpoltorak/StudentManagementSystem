@@ -1,4 +1,4 @@
-FROM gradle:latest AS build
+FROM gradle:8.3.0-jdk17-alpine
 
 WORKDIR /home/sms
 

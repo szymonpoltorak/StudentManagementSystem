@@ -33,5 +33,5 @@ spring:
             password: none
             authentication-database: admin
             database: sms
-            port: 27017
+            port: 8082
             host: ${_MONGO_HOST}
