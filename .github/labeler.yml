@@ -1,0 +1,9 @@
+test: src/test/java/**/*.java
+
+config: src/main/java/razepl/dev/sms/config/**/*.java
+
+api: src/main/java/razepl/dev/sms/api/**/*.java
+
+application-yml: src/main/resources/application.yml
+
+graphql-schema: src/main/resources/graphql/**/*.graphql
