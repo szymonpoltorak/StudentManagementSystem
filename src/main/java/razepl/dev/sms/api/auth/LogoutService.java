@@ -13,7 +13,9 @@ import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.exceptions.TokenDoesNotExistException;
 
-import static razepl.dev.sms.config.constants.Headers.*;
+import static razepl.dev.sms.config.constants.Headers.AUTH_HEADER;
+import static razepl.dev.sms.config.constants.Headers.TOKEN_HEADER;
+import static razepl.dev.sms.config.constants.Headers.TOKEN_START_INDEX;
 
 /**
  * Service class for logging user out.

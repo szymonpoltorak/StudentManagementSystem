@@ -19,8 +19,14 @@ import razepl.dev.sms.exceptions.NullArgumentException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyList;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class TokenManagerServiceTest {
@@ -42,7 +48,7 @@ class TokenManagerServiceTest {
     @BeforeEach
     final void setUp() {
         MockitoAnnotations.openMocks(this);
-        tokenManagerService = new TokenManagerServiceImpl(mockTokenRepository, mockJwtService, mockUserRepository);
+        tokenManagerService = new TokenManagerServiceImpl(mockTokenRepository, mockJwtService);
     }
 
     @Test
@@ -84,7 +90,7 @@ class TokenManagerServiceTest {
         when(mockJwtService.generateToken(user)).thenReturn(authToken);
         when(mockJwtService.generateRefreshToken(user)).thenReturn(refreshToken);
 
-        AuthResponse authResponse = tokenManagerService.buildTokensIntoResponse(user, true);
+        AuthResponse authResponse = tokenManagerService.buildTokensIntoResponse(user);
 
         // then
         assertNotNull(authResponse);
@@ -169,7 +175,7 @@ class TokenManagerServiceTest {
         // when
 
         // then
-        Assertions.assertThrows(NullArgumentException.class, () -> tokenManager.buildTokensIntoResponse(user, false));
+        Assertions.assertThrows(NullArgumentException.class, () -> tokenManager.buildTokensIntoResponse(user));
     }
 
     @Test

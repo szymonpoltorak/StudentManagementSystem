@@ -1,8 +1,6 @@
 package razepl.dev.sms.api.auth;
 
-import graphql.ErrorClassification;
 import graphql.GraphQLError;
-import graphql.language.SourceLocation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +10,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import razepl.dev.sms.api.auth.constants.AuthMessages;
 import razepl.dev.sms.api.auth.interfaces.AuthExceptionInterface;
-import razepl.dev.sms.exceptions.*;
+import razepl.dev.sms.exceptions.AuthManagerInstanceException;
+import razepl.dev.sms.exceptions.GraphQLException;
+import razepl.dev.sms.exceptions.InvalidTokenException;
+import razepl.dev.sms.exceptions.NullArgumentException;
+import razepl.dev.sms.exceptions.PasswordValidationException;
+import razepl.dev.sms.exceptions.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.UserAlreadyExistsException;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -92,26 +94,6 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
     private GraphQLError buildResponse(String errorMessage, String className) {
         log.error("Exception class name : {}\nError message : {}", className, errorMessage);
 
-        return new GraphQLError() {
-            @Override
-            public String getMessage() {
-                return errorMessage;
-            }
-
-            @Override
-            public Map<String, Object> getExtensions() {
-                return Collections.singletonMap("ClassName", className);
-            }
-
-            @Override
-            public List<SourceLocation> getLocations() {
-                return null;
-            }
-
-            @Override
-            public ErrorClassification getErrorType() {
-                return null;
-            }
-        };
+        return new GraphQLException(errorMessage, className);
     }
 }

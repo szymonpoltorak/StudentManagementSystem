@@ -18,14 +18,31 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import razepl.dev.sms.documents.user.interfaces.ServiceUser;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collection;
 import java.util.List;
 
-import static razepl.dev.sms.documents.user.constants.UserValidation.*;
-import static razepl.dev.sms.documents.user.constants.UserValidationMessages.*;
+import static razepl.dev.sms.documents.user.constants.UserValidation.DATE_PATTERN;
+import static razepl.dev.sms.documents.user.constants.UserValidation.NAME_MAX_LENGTH;
+import static razepl.dev.sms.documents.user.constants.UserValidation.NAME_MIN_LENGTH;
+import static razepl.dev.sms.documents.user.constants.UserValidation.NAME_PATTERN;
+import static razepl.dev.sms.documents.user.constants.UserValidation.USER_PACKAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.DATE_NULL_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.EMAIL_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.EMAIL_NULL_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.NAME_NULL_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.NAME_PATTERN_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.NAME_SIZE_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.PASSWORD_NULL_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.SURNAME_NULL_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.SURNAME_PATTERN_MESSAGE;
+import static razepl.dev.sms.documents.user.constants.UserValidationMessages.SURNAME_SIZE_MESSAGE;
 
 /**
  * This class represents a user in the system.
@@ -39,6 +56,9 @@ import static razepl.dev.sms.documents.user.constants.UserValidationMessages.*;
 @Builder
 @Document(collection = "users")
 public class User implements ServiceUser {
+    @Serial
+    private static final long serialVersionUID = 4637945829853929607L;
+
     @NotNull(message = DATE_NULL_MESSAGE)
     @DateTimeFormat(pattern = DATE_PATTERN)
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -107,13 +127,11 @@ public class User implements ServiceUser {
         return true;
     }
 
-    @Serial
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        throw new NotSerializableException(USER_PACKAGE);
+        throw new NotSerializableException("razepl.dev.sms.documents.user.User");
     }
 
-    @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
-        throw new NotSerializableException(USER_PACKAGE);
+        throw new NotSerializableException("razepl.dev.sms.documents.user.User");
     }
 }

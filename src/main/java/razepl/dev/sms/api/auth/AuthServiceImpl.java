@@ -9,7 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.ArgumentValidator;
-import razepl.dev.sms.api.auth.data.*;
+import razepl.dev.sms.api.auth.data.AuthResponse;
+import razepl.dev.sms.api.auth.data.LoginRequest;
+import razepl.dev.sms.api.auth.data.RegisterRequest;
+import razepl.dev.sms.api.auth.data.TokenRequest;
+import razepl.dev.sms.api.auth.data.TokenResponse;
 import razepl.dev.sms.api.auth.interfaces.AuthService;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
@@ -17,7 +21,11 @@ import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
-import razepl.dev.sms.exceptions.*;
+import razepl.dev.sms.exceptions.InvalidTokenException;
+import razepl.dev.sms.exceptions.PasswordValidationException;
+import razepl.dev.sms.exceptions.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.UserAlreadyExistsException;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -60,7 +68,9 @@ public class AuthServiceImpl implements AuthService {
 
         log.info("Building token response for user : {}", user);
 
-        return tokenManager.buildTokensIntoResponse(user, false);
+        tokenManager.revokeUserTokens(user);
+
+        return tokenManager.buildTokensIntoResponse(user);
     }
 
     @Override
@@ -80,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
         );
         log.info("Building token response for user : {}", user);
 
-        return tokenManager.buildTokensIntoResponse(user, true);
+        return tokenManager.buildTokensIntoResponse(user);
     }
 
     @Override

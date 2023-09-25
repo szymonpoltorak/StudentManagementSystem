@@ -8,9 +8,9 @@ Application consists of graphql api only for now but I may add frontend in the f
 * To run with `docker` you have to install `docker` and `docker-compose` on your machine.
 
 * Start spring boot server and mongodb database. Mongo database is recommended to be used within docker
-container which is part of `docker-compose.yml` using:
+  container which is part of `docker-compose.yml` using:
 
-```dockerfile
+```bash
 docker compose up -d
 ```
 

@@ -10,7 +10,6 @@ import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.TokenType;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
-import razepl.dev.sms.documents.user.interfaces.UserRepository;
 
 import java.util.List;
 
@@ -23,7 +22,6 @@ import java.util.List;
 public class TokenManagerServiceImpl implements TokenManagerService {
     private final TokenRepository tokenRepository;
     private final JwtService jwtService;
-    private final UserRepository userRepository;
 
     @Override
     public final void saveUsersToken(String jwtToken, User user) {
@@ -31,11 +29,12 @@ public class TokenManagerServiceImpl implements TokenManagerService {
     }
 
     @Override
-    public final void saveUsersToken(String jwtToken, String username) {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
+    public final AuthResponse refreshUserToken(User user, String authToken, String refreshToken) {
+        revokeUserTokens(user);
 
-        saveUsersToken(jwtToken, user);
+        saveUsersToken(authToken, user);
+
+        return buildTokensIntoResponse(authToken, refreshToken);
     }
 
     @Override
@@ -44,15 +43,12 @@ public class TokenManagerServiceImpl implements TokenManagerService {
     }
 
     @Override
-    public final AuthResponse buildTokensIntoResponse(User user, boolean shouldBeRevoked) {
+    public final AuthResponse buildTokensIntoResponse(User user) {
         ArgumentValidator.throwIfNull(user);
 
         String authToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
-        if (shouldBeRevoked) {
-            revokeUserTokens(user);
-        }
         saveUsersToken(authToken, user);
 
         return buildResponse(authToken, refreshToken);
@@ -73,14 +69,6 @@ public class TokenManagerServiceImpl implements TokenManagerService {
             token.setExpired(true);
         });
         tokenRepository.saveAll(userTokens);
-    }
-
-    @Override
-    public final void revokeUserTokens(String username) {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
-
-        revokeUserTokens(user);
     }
 
     private AuthResponse buildResponse(String authToken, String refreshToken) {
