@@ -21,11 +21,11 @@ import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
-import razepl.dev.sms.exceptions.InvalidTokenException;
-import razepl.dev.sms.exceptions.PasswordValidationException;
-import razepl.dev.sms.exceptions.TokenDoesNotExistException;
-import razepl.dev.sms.exceptions.TokensUserNotFoundException;
-import razepl.dev.sms.exceptions.UserAlreadyExistsException;
+import razepl.dev.sms.exceptions.auth.InvalidTokenException;
+import razepl.dev.sms.exceptions.auth.PasswordValidationException;
+import razepl.dev.sms.exceptions.auth.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.auth.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.auth.UserAlreadyExistsException;
 
 import java.time.LocalDate;
 import java.util.Optional;

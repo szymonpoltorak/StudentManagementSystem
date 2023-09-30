@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import razepl.dev.sms.ArgumentValidator;
 import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
-import razepl.dev.sms.exceptions.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.auth.TokenDoesNotExistException;
 
 import static razepl.dev.sms.config.constants.Headers.AUTH_HEADER;
 import static razepl.dev.sms.config.constants.Headers.TOKEN_HEADER;

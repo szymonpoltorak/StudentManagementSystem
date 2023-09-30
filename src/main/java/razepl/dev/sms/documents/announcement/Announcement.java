@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Data
 @Builder
@@ -21,7 +20,7 @@ public class Announcement implements Comparable<Announcement> {
 
     private LocalDate date;
 
-    private LocalTime time;
+    private String time;
 
     private String authorName;
 

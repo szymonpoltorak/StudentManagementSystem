@@ -6,14 +6,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
+import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
 import razepl.dev.sms.api.annoucement.interfaces.AnnouncementService;
 import razepl.dev.sms.documents.announcement.Announcement;
-import razepl.dev.sms.documents.announcement.AnnouncementDto;
-import razepl.dev.sms.documents.announcement.AnnouncementMapper;
-import razepl.dev.sms.documents.announcement.AnnouncementRepository;
+import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
+import razepl.dev.sms.documents.announcement.interfaces.AnnouncementRepository;
+import razepl.dev.sms.documents.user.User;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static razepl.dev.sms.api.annoucement.constants.AnnouncementsConstants.SIZE_OF_PAGE;
 
@@ -39,5 +45,27 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .sorted()
                 .map(announcementMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public final AnnouncementDto addNewAnnouncement(AnnouncementRequest announcementRequest, User author) {
+        log.info("Announcement request : {}", announcementRequest);
+        log.info("User : {}, added new announcement!", author);
+
+        Announcement announcement = Announcement
+                .builder()
+                .authorName(author.getFullName())
+                .time(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK)))
+                .date(LocalDate.now())
+                .content(announcementRequest.content())
+                .title(announcementRequest.title())
+                .build();
+        log.info(String.valueOf(announcement));
+
+        announcement = announcementRepository.save(announcement);
+
+        log.info("Saved announcement : {}", announcement);
+
+        return announcementMapper.toDto(announcement);
     }
 }

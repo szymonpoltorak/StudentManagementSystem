@@ -1,4 +1,4 @@
-package razepl.dev.sms.exceptions;
+package razepl.dev.sms.exceptions.auth;
 
 import jakarta.validation.ValidationException;
 

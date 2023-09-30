@@ -14,7 +14,7 @@ import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
-import razepl.dev.sms.exceptions.NullArgumentException;
+import razepl.dev.sms.exceptions.auth.NullArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;

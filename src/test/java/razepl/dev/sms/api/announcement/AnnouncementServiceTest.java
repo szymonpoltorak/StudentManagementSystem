@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import razepl.dev.sms.api.annoucement.AnnouncementServiceImpl;
+import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
+import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
 import razepl.dev.sms.documents.announcement.Announcement;
-import razepl.dev.sms.documents.announcement.AnnouncementDto;
-import razepl.dev.sms.documents.announcement.AnnouncementMapper;
-import razepl.dev.sms.documents.announcement.AnnouncementRepository;
+import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
+import razepl.dev.sms.documents.announcement.interfaces.AnnouncementRepository;
+import razepl.dev.sms.documents.user.User;
 import razepl.dev.sms.util.AnnouncementTestData;
 import razepl.dev.sms.util.AnnouncementTestDataBuilder;
 
@@ -19,12 +21,14 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static razepl.dev.sms.api.annoucement.constants.AnnouncementsConstants.SIZE_OF_PAGE;
 
 @SpringBootTest
 class AnnouncementServiceTest {
-    private static final String GET_LIST_ERROR_MESSAGE_PATTERN =
+    private static final String ERROR_MESSAGE_PATTERN =
             "Method should have returned : \n%s, \nbut returned : \n%s";
 
     @InjectMocks
@@ -56,7 +60,7 @@ class AnnouncementServiceTest {
         List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
 
         // then
-        assertEquals(expected, result, String.format(GET_LIST_ERROR_MESSAGE_PATTERN, expected, result));
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
     }
 
     @Test
@@ -81,7 +85,7 @@ class AnnouncementServiceTest {
         List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
 
         // then
-        assertEquals(expected, result, String.format(GET_LIST_ERROR_MESSAGE_PATTERN, expected, result));
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
     }
 
     @Test
@@ -94,6 +98,33 @@ class AnnouncementServiceTest {
         List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
 
         // then
-        assertEquals(expected, result, String.format(GET_LIST_ERROR_MESSAGE_PATTERN, expected, result));
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
+    }
+
+    @Test
+    final void test_addNewAnnouncement_shouldProperlyAddNewAnnouncement() {
+        // given
+        AnnouncementDto expected = testData.announcement2Dto();
+        AnnouncementRequest announcementRequest = AnnouncementRequest
+                .builder()
+                .content("content2")
+                .title("title2")
+                .build();
+        User user = User
+                .builder()
+                .email("user@email.com")
+                .name("authorName")
+                .surname("2")
+                .build();
+
+        when(announcementMapper.toDto(any()))
+                .thenReturn(testData.announcement2Dto());
+
+        // when
+        AnnouncementDto result = announcementService.addNewAnnouncement(announcementRequest, user);
+
+        // then
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
+        verify(announcementRepository).save(testData.announcement2());
     }
 }

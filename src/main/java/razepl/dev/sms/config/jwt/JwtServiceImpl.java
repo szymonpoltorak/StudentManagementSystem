@@ -15,7 +15,7 @@ import razepl.dev.sms.config.constants.Headers;
 import razepl.dev.sms.config.constants.Matchers;
 import razepl.dev.sms.config.constants.Properties;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
-import razepl.dev.sms.exceptions.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.auth.TokenDoesNotExistException;
 
 import java.security.Key;
 import java.util.Collections;

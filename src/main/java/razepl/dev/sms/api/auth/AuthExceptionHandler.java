@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import razepl.dev.sms.api.auth.constants.AuthMessages;
 import razepl.dev.sms.api.auth.data.ExceptionResponse;
 import razepl.dev.sms.api.auth.interfaces.AuthExceptionInterface;
-import razepl.dev.sms.exceptions.AuthManagerInstanceException;
-import razepl.dev.sms.exceptions.InvalidTokenException;
-import razepl.dev.sms.exceptions.NullArgumentException;
-import razepl.dev.sms.exceptions.PasswordValidationException;
-import razepl.dev.sms.exceptions.TokenDoesNotExistException;
-import razepl.dev.sms.exceptions.TokensUserNotFoundException;
-import razepl.dev.sms.exceptions.UserAlreadyExistsException;
+import razepl.dev.sms.exceptions.auth.AuthManagerInstanceException;
+import razepl.dev.sms.exceptions.auth.InvalidTokenException;
+import razepl.dev.sms.exceptions.auth.NullArgumentException;
+import razepl.dev.sms.exceptions.auth.PasswordValidationException;
+import razepl.dev.sms.exceptions.auth.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.auth.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.auth.UserAlreadyExistsException;
 
 import java.util.stream.Collectors;
 

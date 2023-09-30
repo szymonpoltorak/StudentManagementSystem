@@ -1,14 +1,13 @@
 package razepl.dev.sms.api.auth.interfaces;
 
-import graphql.GraphQLError;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import razepl.dev.sms.api.auth.data.ExceptionResponse;
-import razepl.dev.sms.exceptions.TokensUserNotFoundException;
-import razepl.dev.sms.exceptions.UserAlreadyExistsException;
+import razepl.dev.sms.exceptions.auth.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.auth.UserAlreadyExistsException;
 
 /**
  * The AuthExceptionInterface interface defines a methods for handling errors in Authentication.
