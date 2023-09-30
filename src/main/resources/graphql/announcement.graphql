@@ -1,0 +1,11 @@
+type Query {
+    listOfAnnouncements(numberOfSite: Int!): [Announcement]
+}
+
+type Announcement {
+    title: String!
+    description: String!
+    date: String!
+    time: String!
+    authorName: String!
+}

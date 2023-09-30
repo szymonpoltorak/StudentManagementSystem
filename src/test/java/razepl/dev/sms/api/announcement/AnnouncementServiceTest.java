@@ -1,24 +1,32 @@
 package razepl.dev.sms.api.announcement;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import razepl.dev.sms.api.annoucement.AnnouncementServiceImpl;
 import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.AnnouncementDto;
 import razepl.dev.sms.documents.announcement.AnnouncementMapper;
 import razepl.dev.sms.documents.announcement.AnnouncementRepository;
+import razepl.dev.sms.util.AnnouncementTestData;
+import razepl.dev.sms.util.AnnouncementTestDataBuilder;
 
-import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static razepl.dev.sms.api.annoucement.constants.AnnouncementsConstants.SIZE_OF_PAGE;
 
 @SpringBootTest
 class AnnouncementServiceTest {
+    private static final String GET_LIST_ERROR_MESSAGE_PATTERN =
+            "Method should have returned : \n%s, \nbut returned : \n%s";
+
     @InjectMocks
     private AnnouncementServiceImpl announcementService;
 
@@ -28,66 +36,64 @@ class AnnouncementServiceTest {
     @Mock
     private AnnouncementMapper announcementMapper;
 
-    private Announcement announcement1;
-
-    private Announcement announcement2;
-
-    private AnnouncementDto announcement1Dto;
-
-    private AnnouncementDto announcement2Dto;
-
-    @BeforeEach
-    final void setUp() {
-        announcement1 = Announcement
-                .builder()
-                .dateTime(LocalDateTime.parse("2021-01-01T12:00:00"))
-                .title("title")
-                .content("content")
-                .authorName("authorName")
-                .build();
-
-        announcement2 = Announcement
-                .builder()
-                .title("title2")
-                .dateTime(LocalDateTime.parse("2023-01-01T12:00:00"))
-                .content("content2")
-                .authorName("authorName1")
-                .build();
-
-        announcement1Dto = AnnouncementDto
-                .builder()
-                .dateTime("2021-01-01T12:00:00")
-                .title("title")
-                .content("content")
-                .authorName("authorName")
-                .build();
-
-        announcement2Dto = AnnouncementDto
-                .builder()
-                .title("title2")
-                .dateTime("2023-01-01T12:00:00")
-                .content("content2")
-                .authorName("authorName1")
-                .build();
-    }
+    private final AnnouncementTestData testData = AnnouncementTestDataBuilder.getData();
 
     @Test
     final void test_getListOfAnnouncements_shouldReturnListOfAnnouncements() {
         // given
-        List<AnnouncementDto> expected = List.of(announcement1Dto, announcement2Dto);
+        final int NUMBER_OF_PAGE = 1;
+        List<AnnouncementDto> expected = List.of(testData.announcement1Dto(), testData.announcement2Dto());
+        Page<Announcement> expectedPage = new PageImpl<>(List.of(testData.announcement1(), testData.announcement2()));
 
-        when(announcementRepository.findAllByOrderByDateTimeDesc())
-                .thenReturn(List.of(announcement1, announcement2));
-        when(announcementMapper.toDto(announcement1))
-                .thenReturn(announcement1Dto);
-        when(announcementMapper.toDto(announcement2))
-                .thenReturn(announcement2Dto);
+        when(announcementRepository.findAnnouncementsBy(PageRequest.of(NUMBER_OF_PAGE, SIZE_OF_PAGE)))
+                .thenReturn(expectedPage);
+        when(announcementMapper.toDto(testData.announcement1()))
+                .thenReturn(testData.announcement1Dto());
+        when(announcementMapper.toDto(testData.announcement2()))
+                .thenReturn(testData.announcement2Dto());
 
         // when
-        List<AnnouncementDto> result = announcementService.getListOfAnnouncements();
+        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
 
         // then
-        assertEquals(expected, result,
-                String.format("Method should have returned : \n%s, \nbut returned : \n%s", expected, result));
+        assertEquals(expected, result, String.format(GET_LIST_ERROR_MESSAGE_PATTERN, expected, result));
+    }
+
+    @Test
+    final void test_getListOfAnnouncements_shouldReturnListOfAnnouncementSortedBySameDateAndDifferentHours() {
+        // given
+        final int NUMBER_OF_PAGE = 1;
+        List<AnnouncementDto> expected = List.of(testData.announcement3Dto(), testData.announcement1Dto(),
+                testData.announcement2Dto());
+        Page<Announcement> expectedPage = new PageImpl<>(List.of(testData.announcement1(),
+                testData.announcement2(), testData.announcement3()));
+
+        when(announcementRepository.findAnnouncementsBy(PageRequest.of(NUMBER_OF_PAGE, SIZE_OF_PAGE)))
+                .thenReturn(expectedPage);
+        when(announcementMapper.toDto(testData.announcement1()))
+                .thenReturn(testData.announcement1Dto());
+        when(announcementMapper.toDto(testData.announcement2()))
+                .thenReturn(testData.announcement2Dto());
+        when(announcementMapper.toDto(testData.announcement3()))
+                .thenReturn(testData.announcement3Dto());
+
+        // when
+        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
+
+        // then
+        assertEquals(expected, result, String.format(GET_LIST_ERROR_MESSAGE_PATTERN, expected, result));
+    }
+
+    @Test
+    final void test_getListOfAnnouncements_shouldReturnEmptyListIfNumberOfPageIsNegative() {
+        // given
+        final int NUMBER_OF_PAGE = -1;
+        List<AnnouncementDto> expected = Collections.emptyList();
+
+        // when
+        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
+
+        // then
+        assertEquals(expected, result, String.format(GET_LIST_ERROR_MESSAGE_PATTERN, expected, result));
     }
 }

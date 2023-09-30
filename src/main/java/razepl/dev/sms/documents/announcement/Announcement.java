@@ -5,12 +5,13 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
 @Document(collection = "announcements")
-public class Announcement {
+public class Announcement implements Comparable<Announcement> {
     @Id
     private String id;
 
@@ -18,7 +19,17 @@ public class Announcement {
 
     private String content;
 
-    private LocalDateTime dateTime;
+    private LocalDate date;
+
+    private LocalTime time;
 
     private String authorName;
+
+    @Override
+    public final int compareTo(Announcement announcement) {
+        if (!date.equals(announcement.date)) {
+            return date.compareTo(announcement.date);
+        }
+        return time.compareTo(announcement.time);
+    }
 }
