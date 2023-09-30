@@ -105,23 +105,13 @@ class AnnouncementServiceTest {
     final void test_addNewAnnouncement_shouldProperlyAddNewAnnouncement() {
         // given
         AnnouncementDto expected = testData.announcement2Dto();
-        AnnouncementRequest announcementRequest = AnnouncementRequest
-                .builder()
-                .content("content2")
-                .title("title2")
-                .build();
-        User user = User
-                .builder()
-                .email("user@email.com")
-                .name("authorName")
-                .surname("2")
-                .build();
+
 
         when(announcementMapper.toDto(any()))
                 .thenReturn(testData.announcement2Dto());
 
         // when
-        AnnouncementDto result = announcementService.addNewAnnouncement(announcementRequest, user);
+        AnnouncementDto result = announcementService.addNewAnnouncement(testData.announcementRequest(), testData.user());
 
         // then
         assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));

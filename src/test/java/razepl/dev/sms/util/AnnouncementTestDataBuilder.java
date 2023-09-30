@@ -1,7 +1,11 @@
 package razepl.dev.sms.util;
 
-import razepl.dev.sms.documents.announcement.Announcement;
+import org.mapstruct.factory.Mappers;
 import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
+import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
+import razepl.dev.sms.documents.announcement.Announcement;
+import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
+import razepl.dev.sms.documents.user.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,64 +13,52 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public final class AnnouncementTestDataBuilder {
+    private static final AnnouncementMapper MAPPER = Mappers.getMapper(AnnouncementMapper.class);
+
     private AnnouncementTestDataBuilder() {
     }
 
     public static AnnouncementTestData getData() {
-        Announcement announcement1 = Announcement
-                .builder()
-                .date(LocalDate.parse("2021-01-01"))
-                .time("12:00")
-                .title("title")
-                .content("content")
-                .authorName("authorName 1")
-                .build();
+        Announcement announcement1 = getAnnouncement(LocalDate.parse("2021-01-01"), "12:00",
+                "title", "content", "authorName 1");
 
-        Announcement announcement2 = Announcement
+        Announcement announcement2 = getAnnouncement(LocalDate.now(),
+                LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK)), "title2",
+                "content2", "authorName 2");
+
+        Announcement announcement3 = getAnnouncement(LocalDate.parse("2021-01-01"), "11:59", "title3",
+                "content3", "authorName 3");
+
+        AnnouncementDto announcement1Dto = MAPPER.toDto(announcement1);
+
+        AnnouncementDto announcement2Dto = MAPPER.toDto(announcement2);
+
+        AnnouncementDto announcement3Dto = MAPPER.toDto(announcement3);
+
+        AnnouncementRequest announcementRequest = AnnouncementRequest
                 .builder()
-                .title("title2")
-                .date(LocalDate.now())
-                .time(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK)))
                 .content("content2")
-                .authorName("authorName 2")
-                .build();
-
-        Announcement announcement3 = Announcement
-                .builder()
-                .date(LocalDate.parse("2021-01-01"))
-                .time("11:59")
-                .title("title3")
-                .content("content3")
-                .authorName("authorName 3")
-                .build();
-
-        AnnouncementDto announcement1Dto = AnnouncementDto
-                .builder()
-                .date("2021-01-01")
-                .title("title")
-                .content("content")
-                .time("12:00")
-                .authorName("authorName 1")
-                .build();
-
-        AnnouncementDto announcement2Dto = AnnouncementDto
-                .builder()
                 .title("title2")
-                .time(announcement2.getTime())
-                .date("2023-01-01")
-                .content("content2")
-                .authorName("authorName 2")
                 .build();
-
-        AnnouncementDto announcement3Dto = AnnouncementDto
+        User user = User
                 .builder()
-                .date("2021-01-01")
-                .time("11:59")
-                .title("title3")
-                .content("content3")
-                .authorName("authorName 3")
+                .email("user@email.com")
+                .name("authorName")
+                .surname("2")
                 .build();
         return new AnnouncementTestData(announcement1, announcement2, announcement3,
-                announcement1Dto, announcement2Dto, announcement3Dto);
+                announcement1Dto, announcement2Dto, announcement3Dto, user, announcementRequest);
+    }
+
+    private static Announcement getAnnouncement(LocalDate date, String time, String title,
+                                                String content, String authorName) {
+        return Announcement
+                .builder()
+                .date(date)
+                .time(time)
+                .title(title)
+                .content(content)
+                .authorName(authorName)
+                .build();
     }
 }
