@@ -11,7 +11,7 @@ public final class Matchers {
      */
     public static final String LOGOUT_URL = "/api/auth/logout";
 
-    public static final String[] WHITE_LIST = {"/graphql", "/graphiql"};
+    public static final String[] WHITE_LIST = {"/graphiql", "/api/auth/**"};
 
     private Matchers() {
     }

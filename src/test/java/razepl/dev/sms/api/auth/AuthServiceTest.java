@@ -1,4 +1,4 @@
-package razepl.dev.sms.auth;
+package razepl.dev.sms.api.auth;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
