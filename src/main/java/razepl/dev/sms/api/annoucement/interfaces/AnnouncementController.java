@@ -10,4 +10,6 @@ public interface AnnouncementController {
     List<AnnouncementDto> getListOfAnnouncements(int numberOfPage, User user);
 
     AnnouncementDto addNewAnnouncement(AnnouncementRequest announcementRequest, User author);
+
+    AnnouncementDto removeAnnouncement(String announcementId, User user);
 }

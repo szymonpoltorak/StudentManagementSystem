@@ -20,14 +20,14 @@ public final class AnnouncementTestDataBuilder {
 
     public static AnnouncementTestData getData() {
         Announcement announcement1 = getAnnouncement(LocalDate.parse("2021-01-01"), "12:00",
-                "title", "content", "authorName 1");
+                "title", "content", "authorName 1", "id1");
 
         Announcement announcement2 = getAnnouncement(LocalDate.now(),
                 LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK)), "title2",
-                "content2", "authorName 2");
+                "content2", "authorName 2", "id2");
 
         Announcement announcement3 = getAnnouncement(LocalDate.parse("2021-01-01"), "11:59", "title3",
-                "content3", "authorName 3");
+                "content3", "authorName 3", "id3");
 
         AnnouncementDto announcement1Dto = MAPPER.toDto(announcement1);
 
@@ -51,9 +51,10 @@ public final class AnnouncementTestDataBuilder {
     }
 
     private static Announcement getAnnouncement(LocalDate date, String time, String title,
-                                                String content, String authorName) {
+                                                String content, String authorName, String id) {
         return Announcement
                 .builder()
+                .id(id)
                 .date(date)
                 .time(time)
                 .title(title)

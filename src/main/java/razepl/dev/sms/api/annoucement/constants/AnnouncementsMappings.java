@@ -5,6 +5,8 @@ public final class AnnouncementsMappings {
 
     public static final String ADD_NEW_ANNOUNCEMENT = "addNewAnnouncement";
 
+    public static final String REMOVE_ANNOUNCEMENT = "removeAnnouncement";
+
     private AnnouncementsMappings() {
     }
 }

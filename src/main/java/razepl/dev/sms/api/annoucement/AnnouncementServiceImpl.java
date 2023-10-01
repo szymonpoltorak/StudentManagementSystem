@@ -14,6 +14,7 @@ import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementRepository;
 import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.exceptions.announcement.AnnouncementNotFoundException;
 import razepl.dev.sms.exceptions.announcement.AuthorNotFoundException;
 
 import java.time.LocalDate;
@@ -34,10 +35,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public final List<AnnouncementDto> getListOfAnnouncements(int numberOfPage, User user) {
-        if (user == null) {
-            throw new UsernameNotFoundException("User is not authenticated!");
-        }
+        validateUsersAuthentication(user);
+
         if (numberOfPage < 0) {
+            log.warn("User gave the negative number of page!");
+
             return Collections.emptyList();
         }
         Pageable pageable = PageRequest.of(numberOfPage, SIZE_OF_PAGE);
@@ -55,6 +57,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public final AnnouncementDto addNewAnnouncement(AnnouncementRequest announcementRequest, User author) {
         if (author == null) {
+            log.error("Author was not found in methods body!");
+
             throw new AuthorNotFoundException("User have to be authenticated using jwt token!");
         }
         log.info("Announcement request : {}", announcementRequest);
@@ -75,5 +79,30 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         log.info("Saved announcement : {}", announcement);
 
         return announcementMapper.toDto(announcement);
+    }
+
+    @Override
+    public final AnnouncementDto removeAnnouncement(String announcementId, User user) {
+        validateUsersAuthentication(user);
+
+        log.info("Removing the announcement with id : {}", announcementId);
+
+        Announcement announcementToRemove = announcementRepository.findById(announcementId)
+                .orElseThrow(() -> new AnnouncementNotFoundException
+                        (String.format("User with id %s was not found!", announcementId))
+                );
+        announcementRepository.delete(announcementToRemove);
+
+        log.info("Announcement has been removed");
+
+        return announcementMapper.toDto(announcementToRemove);
+    }
+
+    private void validateUsersAuthentication(User user) {
+        if (user == null) {
+            log.error("User was not authenticated!");
+
+            throw new UsernameNotFoundException("User is not authenticated!");
+        }
     }
 }

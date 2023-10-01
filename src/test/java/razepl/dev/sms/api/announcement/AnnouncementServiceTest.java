@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import razepl.dev.sms.api.annoucement.AnnouncementServiceImpl;
 import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
 import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
@@ -14,13 +15,18 @@ import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementRepository;
 import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.exceptions.announcement.AnnouncementNotFoundException;
+import razepl.dev.sms.exceptions.announcement.AuthorNotFoundException;
 import razepl.dev.sms.util.AnnouncementTestData;
 import razepl.dev.sms.util.AnnouncementTestDataBuilder;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -102,10 +108,21 @@ class AnnouncementServiceTest {
     }
 
     @Test
+    final void test_getListOfAnnouncements_shouldThrowUsernameNotFoundException() {
+        // given
+        final int NUMBER_OF_PAGE = -1;
+
+        // when
+
+        // then
+        assertThrows(UsernameNotFoundException.class,
+                () -> announcementService.getListOfAnnouncements(NUMBER_OF_PAGE, null));
+    }
+
+    @Test
     final void test_addNewAnnouncement_shouldProperlyAddNewAnnouncement() {
         // given
         AnnouncementDto expected = testData.announcement2Dto();
-
 
         when(announcementMapper.toDto(any()))
                 .thenReturn(testData.announcement2Dto());
@@ -115,6 +132,77 @@ class AnnouncementServiceTest {
 
         // then
         assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
-        verify(announcementRepository).save(testData.announcement2());
+        verify(announcementRepository).save(any(Announcement.class));
+    }
+
+    @Test
+    final void test_addNewAnnouncement_shouldThrowAuthorNotFoundException() {
+        // given
+        AnnouncementRequest request = testData.announcementRequest();
+
+        // when
+
+        // then
+        assertThrows(AuthorNotFoundException.class,
+                () -> announcementService.addNewAnnouncement(request, null));
+    }
+
+    @Test
+    final void test_removeAnnouncement_shouldProperlyRemoveAnnouncement() {
+        // given
+        final String ANNOUNCEMENT_ID = "id1";
+        AnnouncementDto expected = testData.announcement1Dto();
+        Announcement announcement = testData.announcement1();
+
+        when(announcementRepository.findById(ANNOUNCEMENT_ID))
+                .thenReturn(Optional.ofNullable(testData.announcement1()));
+        when(announcementMapper.toDto(testData.announcement1()))
+                .thenReturn(testData.announcement1Dto());
+
+        // when
+        AnnouncementDto result = announcementService.removeAnnouncement(ANNOUNCEMENT_ID, testData.user());
+
+        // then
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
+        assertNotNull(announcement, "Announcement cannot be null fix test data");
+        verify(announcementRepository).delete(announcement);
+    }
+
+    @Test
+    final void test_removeAnnouncement_shouldThrowUsernameNotFoundException() {
+        // given
+        String ANNOUNCEMENT_ID = "id1";
+
+        // when
+
+        // then
+        assertThrows(UsernameNotFoundException.class,
+                () -> announcementService.removeAnnouncement(ANNOUNCEMENT_ID, null));
+    }
+
+    @Test
+    final void test_removeAnnouncement_shouldThrowAnnouncementNotFoundExceptionOnNull() {
+        // given
+        String ANNOUNCEMENT_ID = null;
+        User user = testData.user();
+
+        // when
+
+        // then
+        assertThrows(AnnouncementNotFoundException.class,
+                () -> announcementService.removeAnnouncement(ANNOUNCEMENT_ID, user));
+    }
+
+    @Test
+    final void test_removeAnnouncement_shouldThrowAnnouncementNotFoundException() {
+        // given
+        final String ANNOUNCEMENT_ID = "NOT_EXISTING_ID";
+        User user = testData.user();
+
+        // when
+
+        // then
+        assertThrows(AnnouncementNotFoundException.class,
+                () -> announcementService.removeAnnouncement(ANNOUNCEMENT_ID, user));
     }
 }

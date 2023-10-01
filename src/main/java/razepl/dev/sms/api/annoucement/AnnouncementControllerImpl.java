@@ -16,6 +16,7 @@ import java.util.List;
 
 import static razepl.dev.sms.api.annoucement.constants.AnnouncementsMappings.ADD_NEW_ANNOUNCEMENT;
 import static razepl.dev.sms.api.annoucement.constants.AnnouncementsMappings.LIST_OF_ANNOUNCEMENTS_MAPPING;
+import static razepl.dev.sms.api.annoucement.constants.AnnouncementsMappings.REMOVE_ANNOUNCEMENT;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,5 +35,12 @@ public class AnnouncementControllerImpl implements AnnouncementController {
     public final AnnouncementDto addNewAnnouncement(@Argument AnnouncementRequest announcementRequest,
                                                     @AuthenticationPrincipal User author) {
         return announcementService.addNewAnnouncement(announcementRequest, author);
+    }
+
+    @Override
+    @MutationMapping(value = REMOVE_ANNOUNCEMENT)
+    public final AnnouncementDto removeAnnouncement(@Argument String announcementId,
+                                                    @AuthenticationPrincipal User user) {
+        return announcementService.removeAnnouncement(announcementId, user);
     }
 }
