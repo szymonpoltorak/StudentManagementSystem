@@ -4,4 +4,6 @@ import graphql.GraphQLError;
 
 public interface AnnouncementExceptionHandler {
     GraphQLError handleAuthorNotFoundException(RuntimeException exception);
+
+    GraphQLError handleAnnouncementNotFoundException(RuntimeException exception);
 }

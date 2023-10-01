@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import razepl.dev.sms.api.annoucement.interfaces.AnnouncementExceptionHandler;
 import razepl.dev.sms.exceptions.GraphQLException;
+import razepl.dev.sms.exceptions.announcement.AnnouncementNotFoundException;
 import razepl.dev.sms.exceptions.announcement.AuthorNotFoundException;
 
 @Slf4j
@@ -18,6 +19,14 @@ public class AnnouncementExceptionHandlerImpl implements AnnouncementExceptionHa
         String className = exception.getClass().getSimpleName();
 
         return buildResponse(exception.getMessage(), className, HttpStatus.UNAUTHORIZED);
+    }
+
+    @Override
+    @GraphQlExceptionHandler(AnnouncementNotFoundException.class)
+    public final GraphQLError handleAnnouncementNotFoundException(RuntimeException exception) {
+        String className = exception.getClass().getSimpleName();
+
+        return buildResponse(exception.getMessage(), className, HttpStatus.NOT_FOUND);
     }
 
     private GraphQLError buildResponse(String errorMessage, String className, HttpStatus statusCode) {
