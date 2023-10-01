@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
 import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
@@ -13,6 +14,7 @@ import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementRepository;
 import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.exceptions.announcement.AuthorNotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,7 +33,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
     @Override
-    public final List<AnnouncementDto> getListOfAnnouncements(int numberOfPage) {
+    public final List<AnnouncementDto> getListOfAnnouncements(int numberOfPage, User user) {
+        if (user == null) {
+            throw new UsernameNotFoundException("User is not authenticated!");
+        }
         if (numberOfPage < 0) {
             return Collections.emptyList();
         }
@@ -49,6 +54,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public final AnnouncementDto addNewAnnouncement(AnnouncementRequest announcementRequest, User author) {
+        if (author == null) {
+            throw new AuthorNotFoundException("User have to be authenticated using jwt token!");
+        }
         log.info("Announcement request : {}", announcementRequest);
         log.info("User : {}, added new announcement!", author);
 

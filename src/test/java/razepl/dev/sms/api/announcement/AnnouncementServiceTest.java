@@ -57,7 +57,7 @@ class AnnouncementServiceTest {
                 .thenReturn(testData.announcement2Dto());
 
         // when
-        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
+        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE, testData.user());
 
         // then
         assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
@@ -82,7 +82,7 @@ class AnnouncementServiceTest {
                 .thenReturn(testData.announcement3Dto());
 
         // when
-        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
+        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE, testData.user());
 
         // then
         assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
@@ -95,7 +95,7 @@ class AnnouncementServiceTest {
         List<AnnouncementDto> expected = Collections.emptyList();
 
         // when
-        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE);
+        List<AnnouncementDto> result = announcementService.getListOfAnnouncements(NUMBER_OF_PAGE, testData.user());
 
         // then
         assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));

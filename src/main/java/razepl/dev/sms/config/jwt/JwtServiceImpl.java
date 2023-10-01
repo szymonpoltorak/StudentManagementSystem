@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
+import static razepl.dev.sms.api.auth.constants.AuthMappings.AUTH_MAPPING;
+
 /**
  * Service to help manage Jwt manipulation like creation.
  * It implements {@link JwtService}.
@@ -91,7 +93,7 @@ public class JwtServiceImpl implements JwtService {
 
         String authHeader = request.getHeader(Headers.AUTH_HEADER);
 
-        if (request.getServletPath().contains(Matchers.AUTH_MAPPING) || authHeader == null || !authHeader.startsWith(Headers.TOKEN_HEADER)) {
+        if (request.getServletPath().contains(AUTH_MAPPING) || authHeader == null || !authHeader.startsWith(Headers.TOKEN_HEADER)) {
             return null;
         }
         return authHeader.substring(Headers.TOKEN_START_INDEX);

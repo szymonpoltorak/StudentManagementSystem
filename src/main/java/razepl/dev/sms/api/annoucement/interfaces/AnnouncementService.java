@@ -7,7 +7,7 @@ import razepl.dev.sms.documents.user.User;
 import java.util.List;
 
 public interface AnnouncementService {
-    List<AnnouncementDto> getListOfAnnouncements(int numberOfPage);
+    List<AnnouncementDto> getListOfAnnouncements(int numberOfPage, User user);
 
     AnnouncementDto addNewAnnouncement(AnnouncementRequest announcementRequest, User author);
 }

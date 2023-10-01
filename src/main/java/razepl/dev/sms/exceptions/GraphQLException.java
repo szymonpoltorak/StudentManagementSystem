@@ -3,6 +3,7 @@ package razepl.dev.sms.exceptions;
 import graphql.ErrorClassification;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
 import java.util.Collections;
@@ -15,15 +16,18 @@ public class GraphQLException extends RuntimeException implements GraphQLError {
 
     private final String className;
 
-    public GraphQLException(String message, String className) {
+    private final HttpStatus httpStatus;
+
+    public GraphQLException(String message, String className, HttpStatus httpStatus) {
         super(message);
 
         this.className = className;
+        this.httpStatus = httpStatus;
     }
 
     @Override
     public final Map<String, Object> getExtensions() {
-        return Collections.singletonMap("ClassName", className);
+        return Map.of("ClassName", className, "HttpStatus", httpStatus);
     }
 
     @Override

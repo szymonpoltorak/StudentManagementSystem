@@ -31,34 +31,33 @@ import static razepl.dev.sms.api.auth.constants.AuthMappings.REGISTER_MAPPING;
  * Class to control auth endpoints.
  * It implements {@link AuthController}.
  */
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping(value = AUTH_MAPPING)
 public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
 
     @Override
-    @PostMapping(value = REGISTER_MAPPING)
+    @MutationMapping(value = REGISTER_MAPPING)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public final AuthResponse registerUser(@RequestBody RegisterRequest registerRequest) {
+    public final AuthResponse registerUser(@Argument RegisterRequest registerRequest) {
         return authService.register(registerRequest);
     }
 
     @Override
-    @PostMapping(value = LOGIN_MAPPING)
-    public final AuthResponse loginUser(@RequestBody LoginRequest loginRequest) {
+    @MutationMapping(value = LOGIN_MAPPING)
+    public final AuthResponse loginUser(@Argument LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
     @Override
-    @PostMapping(value = REFRESH_MAPPING)
-    public final AuthResponse refreshUserToken(@RequestParam String refreshToken) {
+    @MutationMapping(value = REFRESH_MAPPING)
+    public final AuthResponse refreshUserToken(@Argument String refreshToken) {
         return authService.refreshToken(refreshToken);
     }
 
     @Override
-    @GetMapping(value = AUTHENTICATE_MAPPING)
-    public final TokenResponse authenticateUser(@RequestBody TokenRequest tokenRequest) {
+    @QueryMapping(value = AUTHENTICATE_MAPPING)
+    public final TokenResponse authenticateUser(@Argument TokenRequest tokenRequest) {
         return authService.validateUsersTokens(tokenRequest);
     }
 }

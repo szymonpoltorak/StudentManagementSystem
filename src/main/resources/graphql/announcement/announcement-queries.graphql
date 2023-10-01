@@ -1,0 +1,7 @@
+extend type Query {
+    listOfAnnouncements(numberOfPage: Int!): [Announcement]
+}
+
+extend type Mutation {
+    addNewAnnouncement(announcementRequest: AnnouncementRequest!): Announcement
+}

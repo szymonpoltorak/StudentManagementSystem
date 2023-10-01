@@ -1,17 +1,18 @@
 package razepl.dev.sms.api.auth;
 
+import graphql.GraphQLError;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import razepl.dev.sms.api.auth.constants.AuthMessages;
-import razepl.dev.sms.api.auth.data.ExceptionResponse;
-import razepl.dev.sms.api.auth.interfaces.AuthExceptionInterface;
+import razepl.dev.sms.api.auth.interfaces.AuthExceptionHandler;
+import razepl.dev.sms.exceptions.GraphQLException;
 import razepl.dev.sms.exceptions.auth.AuthManagerInstanceException;
 import razepl.dev.sms.exceptions.auth.InvalidTokenException;
 import razepl.dev.sms.exceptions.auth.NullArgumentException;
@@ -24,14 +25,14 @@ import java.util.stream.Collectors;
 
 /**
  * Class created to handle various exceptions that can be thrown in auth endpoints.
- * It implements {@link AuthExceptionInterface}.
+ * It implements {@link AuthExceptionHandler}.
  */
 @Slf4j
-@RestControllerAdvice
-public class AuthExceptionHandler implements AuthExceptionInterface {
+@ControllerAdvice
+public class AuthExceptionHandlerImpl implements AuthExceptionHandler {
     @Override
-    @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<ExceptionResponse> handleConstraintValidationExceptions(ConstraintViolationException exception) {
+    @GraphQlExceptionHandler(ConstraintViolationException.class)
+    public final GraphQLError handleConstraintValidationExceptions(ConstraintViolationException exception) {
         String className = exception.getClass().getSimpleName();
         String errorMessage = exception.getConstraintViolations()
                 .stream()
@@ -42,8 +43,8 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
     }
 
     @Override
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public final ResponseEntity<ExceptionResponse> handleMethodArgValidExceptions(MethodArgumentNotValidException exception) {
+    @GraphQlExceptionHandler(MethodArgumentNotValidException.class)
+    public final GraphQLError handleMethodArgValidExceptions(MethodArgumentNotValidException exception) {
         String className = exception.getClass().getSimpleName();
         String errorMessage = exception.getBindingResult()
                 .getFieldErrors()
@@ -55,52 +56,54 @@ public class AuthExceptionHandler implements AuthExceptionInterface {
     }
 
     @Override
-    @ExceptionHandler(PasswordValidationException.class)
-    public final ResponseEntity<ExceptionResponse> handlePasswordValidationException(ValidationException exception) {
+    @GraphQlExceptionHandler(PasswordValidationException.class)
+    public final GraphQLError handlePasswordValidationException(ValidationException exception) {
         return buildResponse(exception.getMessage(), exception.getClass().getSimpleName(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @Override
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> handleUserNotFoundException(UsernameNotFoundException exception) {
+    @GraphQlExceptionHandler(UsernameNotFoundException.class)
+    public final GraphQLError handleUserNotFoundException(UsernameNotFoundException exception) {
         return buildResponse(exception.getMessage(), exception.getClass().getSimpleName(), HttpStatus.NOT_FOUND);
     }
 
     @Override
-    @ExceptionHandler(AuthManagerInstanceException.class)
-    public final ResponseEntity<ExceptionResponse> handleAuthManagerInstanceException(InstantiationException exception) {
+    @GraphQlExceptionHandler(AuthManagerInstanceException.class)
+    public final GraphQLError handleAuthManagerInstanceException(InstantiationException exception) {
         return buildResponse(exception.getMessage(), exception.getClass().getSimpleName(), HttpStatus.FAILED_DEPENDENCY);
     }
 
     @Override
-    @ExceptionHandler({InvalidTokenException.class, TokenDoesNotExistException.class, NullArgumentException.class})
-    public final ResponseEntity<ExceptionResponse> handleTokenExceptions(IllegalArgumentException exception) {
+    @GraphQlExceptionHandler({InvalidTokenException.class, TokenDoesNotExistException.class, NullArgumentException.class})
+    public final GraphQLError handleTokenExceptions(IllegalArgumentException exception) {
         return buildResponse(exception.getMessage(), exception.getClass().getSimpleName(), HttpStatus.UNAUTHORIZED);
     }
 
     @Override
-    @ExceptionHandler({UserAlreadyExistsException.class})
-    public final ResponseEntity<ExceptionResponse> handleUserExistException(UserAlreadyExistsException exception) {
+    @GraphQlExceptionHandler({UserAlreadyExistsException.class})
+    public final GraphQLError handleUserExistException(IllegalStateException exception) {
         return buildResponse(exception.getMessage(), exception.getClass().getSimpleName(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @Override
-    @ExceptionHandler(TokensUserNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> handleTokenExceptions(TokensUserNotFoundException exception) {
+    @GraphQlExceptionHandler(TokensUserNotFoundException.class)
+    public final GraphQLError handleTokenExceptions(IllegalStateException exception) {
         String className = exception.getClass().getSimpleName();
 
         return buildResponse(exception.getMessage(), className, HttpStatus.UNAUTHORIZED);
     }
 
-    private ResponseEntity<ExceptionResponse> buildResponse(String errorMessage, String className, HttpStatus statusCode) {
-        ExceptionResponse exceptionResponse = ExceptionResponse
-                .builder()
-                .exceptionClassName(className)
-                .errorMessage(errorMessage)
-                .build();
+    @Override
+    @GraphQlExceptionHandler(BadCredentialsException.class)
+    public final GraphQLError handleBadCredentialsException(BadCredentialsException exception) {
+        String className = exception.getClass().getSimpleName();
 
+        return buildResponse(exception.getMessage(), className, HttpStatus.UNAUTHORIZED);
+    }
+
+    private GraphQLError buildResponse(String errorMessage, String className, HttpStatus statusCode) {
         log.error("Exception class name : {}\nError message : {}", className, errorMessage);
 
-        return new ResponseEntity<>(exceptionResponse, statusCode);
+        return new GraphQLException(errorMessage, className, statusCode);
     }
 }
