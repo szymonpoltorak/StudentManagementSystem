@@ -210,7 +210,6 @@ class AnnouncementServiceTest {
     @Test
     final void test_updateAnnouncement_shouldThrowUsernameNotFoundExceptionOnNotAuthenticatedUser() {
         // given
-        Announcement announcement = testData.announcement1();
         UpdateRequest request = testData.updateRequest();
 
         // when
@@ -220,11 +219,51 @@ class AnnouncementServiceTest {
     }
 
     @Test
-    final void test_updateAnnouncement_shouldUpdateTitle() {
+    final void test_updateAnnouncement_shouldUpdateTitleAndContent() {
         // given
         Announcement announcement = testData.announcement1();
         UpdateRequest updateRequest = testData.updateRequest();
         AnnouncementDto expected = testData.updateRequestDto();
+
+        when(announcementRepository.findById(updateRequest.announcementId()))
+                .thenReturn(Optional.of(announcement));
+        when(announcementMapper.toDto(announcement))
+                .thenReturn(expected);
+
+        // when
+        AnnouncementDto result = announcementService.updateAnnouncement(updateRequest, testData.user());
+
+        // then
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
+        verify(announcementRepository).save(any(Announcement.class));
+    }
+
+    @Test
+    final void test_updateAnnouncement_shouldUpdateTitleAndContentAreBlank() {
+        // given
+        Announcement announcement = testData.announcement1();
+        UpdateRequest updateRequest = testData.updateRequestBlanks();
+        AnnouncementDto expected = testData.announcement1Dto();
+
+        when(announcementRepository.findById(updateRequest.announcementId()))
+                .thenReturn(Optional.of(announcement));
+        when(announcementMapper.toDto(announcement))
+                .thenReturn(expected);
+
+        // when
+        AnnouncementDto result = announcementService.updateAnnouncement(updateRequest, testData.user());
+
+        // then
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
+        verify(announcementRepository).save(any(Announcement.class));
+    }
+
+    @Test
+    final void test_updateAnnouncement_shouldUpdateTitleAndContentAreEmpty() {
+        // given
+        Announcement announcement = testData.announcement1();
+        UpdateRequest updateRequest = testData.updateRequestEmpties();
+        AnnouncementDto expected = testData.announcement1Dto();
 
         when(announcementRepository.findById(updateRequest.announcementId()))
                 .thenReturn(Optional.of(announcement));

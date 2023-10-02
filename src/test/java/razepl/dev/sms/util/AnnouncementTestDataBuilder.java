@@ -36,9 +36,13 @@ public final class AnnouncementTestDataBuilder {
 
         AnnouncementDto announcement3Dto = MAPPER.toDto(announcement3);
 
-        UpdateRequest updateRequest = updateRequest(announcement1);
+        UpdateRequest updateRequest = updateRequest(announcement1, "title4", "content4");
 
         AnnouncementDto updateRequestDto = updateRequestDto(announcement1);
+
+        UpdateRequest updateRequestEmpties = updateRequest(announcement1, "", "");
+
+        UpdateRequest updateRequestBlanks = updateRequest(announcement1, "   ", "    ");
 
         AnnouncementRequest announcementRequest = announcementRequest();
 
@@ -46,7 +50,7 @@ public final class AnnouncementTestDataBuilder {
 
         return new AnnouncementTestData(announcement1, announcement2, announcement3,
                 announcement1Dto, announcement2Dto, announcement3Dto, user, announcementRequest,
-                updateRequest, updateRequestDto);
+                updateRequest, updateRequestDto, updateRequestEmpties, updateRequestBlanks);
     }
 
     private static Announcement getAnnouncement(LocalDate date, String time, String title,
@@ -62,12 +66,12 @@ public final class AnnouncementTestDataBuilder {
                 .build();
     }
 
-    private static UpdateRequest updateRequest(Announcement announcement1) {
+    private static UpdateRequest updateRequest(Announcement announcement1, String title, String content) {
         return UpdateRequest
                 .builder()
                 .announcementId(announcement1.getId())
-                .title("title4")
-                .content(announcement1.getContent())
+                .title(title)
+                .content(content)
                 .build();
     }
 
@@ -76,7 +80,7 @@ public final class AnnouncementTestDataBuilder {
                 .builder()
                 .announcementId(announcement1.getId())
                 .title("title4")
-                .content(announcement1.getContent())
+                .content("content4")
                 .build();
     }
 

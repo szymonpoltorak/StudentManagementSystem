@@ -9,5 +9,6 @@ import razepl.dev.sms.documents.user.User;
 public record AnnouncementTestData(Announcement announcement1, Announcement announcement2, Announcement announcement3,
                                    AnnouncementDto announcement1Dto, AnnouncementDto announcement2Dto,
                                    AnnouncementDto announcement3Dto, User user, AnnouncementRequest announcementRequest,
-                                   UpdateRequest updateRequest, AnnouncementDto updateRequestDto) {
+                                   UpdateRequest updateRequest, AnnouncementDto updateRequestDto,
+                                   UpdateRequest updateRequestEmpties, UpdateRequest updateRequestBlanks) {
 }

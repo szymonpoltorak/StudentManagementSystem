@@ -11,3 +11,9 @@ input AnnouncementRequest {
     content: String!
     title: String!
 }
+
+input UpdateRequest {
+    announcementId: String!
+    content: String!
+    title: String!
+}

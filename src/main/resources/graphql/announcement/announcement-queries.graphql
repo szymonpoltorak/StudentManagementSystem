@@ -6,4 +6,6 @@ extend type Mutation {
     addNewAnnouncement(announcementRequest: AnnouncementRequest!): Announcement
 
     removeAnnouncement(announcementId: String!): Announcement
+
+    updateAnnouncement(updateRequest: UpdateRequest!): Announcement
 }

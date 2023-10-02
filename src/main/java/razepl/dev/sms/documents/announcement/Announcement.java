@@ -35,8 +35,11 @@ public class Announcement implements Comparable<Announcement>, Updateable<Update
 
     @Override
     public final void update(UpdateRequest updateRequest) {
-        this.content = updateRequest.content();
-        this.time = updateRequest.title();
+        String newTitle = updateRequest.title().trim();
+        String newContent = updateRequest.content().trim();
+
+        this.content = newContent.isEmpty() ? this.content : newContent;
+        this.title = newTitle.isEmpty() ? this.title : newTitle;
         this.date = LocalDate.now();
         this.time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm", Locale.UK));
     }
