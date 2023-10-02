@@ -3,6 +3,7 @@ package razepl.dev.sms.util;
 import org.mapstruct.factory.Mappers;
 import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
 import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
+import razepl.dev.sms.api.annoucement.data.UpdateRequest;
 import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
 import razepl.dev.sms.documents.user.User;
@@ -35,19 +36,17 @@ public final class AnnouncementTestDataBuilder {
 
         AnnouncementDto announcement3Dto = MAPPER.toDto(announcement3);
 
-        AnnouncementRequest announcementRequest = AnnouncementRequest
-                .builder()
-                .content("content2")
-                .title("title2")
-                .build();
-        User user = User
-                .builder()
-                .email("user@email.com")
-                .name("authorName")
-                .surname("2")
-                .build();
+        UpdateRequest updateRequest = updateRequest(announcement1);
+
+        AnnouncementDto updateRequestDto = updateRequestDto(announcement1);
+
+        AnnouncementRequest announcementRequest = announcementRequest();
+
+        User user = buildUser();
+
         return new AnnouncementTestData(announcement1, announcement2, announcement3,
-                announcement1Dto, announcement2Dto, announcement3Dto, user, announcementRequest);
+                announcement1Dto, announcement2Dto, announcement3Dto, user, announcementRequest,
+                updateRequest, updateRequestDto);
     }
 
     private static Announcement getAnnouncement(LocalDate date, String time, String title,
@@ -60,6 +59,41 @@ public final class AnnouncementTestDataBuilder {
                 .title(title)
                 .content(content)
                 .authorName(authorName)
+                .build();
+    }
+
+    private static UpdateRequest updateRequest(Announcement announcement1) {
+        return UpdateRequest
+                .builder()
+                .announcementId(announcement1.getId())
+                .title("title4")
+                .content(announcement1.getContent())
+                .build();
+    }
+
+    private static AnnouncementDto updateRequestDto(Announcement announcement1) {
+        return AnnouncementDto
+                .builder()
+                .announcementId(announcement1.getId())
+                .title("title4")
+                .content(announcement1.getContent())
+                .build();
+    }
+
+    private static User buildUser() {
+        return User
+                .builder()
+                .email("user@email.com")
+                .name("authorName")
+                .surname("2")
+                .build();
+    }
+
+    private static AnnouncementRequest announcementRequest() {
+        return AnnouncementRequest
+                .builder()
+                .content("content2")
+                .title("title2")
                 .build();
     }
 }

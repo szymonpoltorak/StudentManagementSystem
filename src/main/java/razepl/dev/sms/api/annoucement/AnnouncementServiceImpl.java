@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
 import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
+import razepl.dev.sms.api.annoucement.data.UpdateRequest;
 import razepl.dev.sms.api.annoucement.interfaces.AnnouncementService;
 import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
@@ -86,6 +87,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         validateUsersAuthentication(user);
 
         log.info("Removing the announcement with id : {}", announcementId);
+        log.info("User who wants to remove announcement : {}", user.getEmail());
 
         Announcement announcementToRemove = announcementRepository.findById(announcementId)
                 .orElseThrow(() -> new AnnouncementNotFoundException
@@ -96,6 +98,29 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         log.info("Announcement has been removed");
 
         return announcementMapper.toDto(announcementToRemove);
+    }
+
+    @Override
+    public final AnnouncementDto updateAnnouncement(UpdateRequest updateRequest, User user) {
+        validateUsersAuthentication(user);
+
+        log.info("Received update request with data : {}", updateRequest);
+        log.info("User who wants to update : {}", user.getEmail());
+
+        Announcement announcement = announcementRepository.findById(updateRequest.announcementId())
+                .orElseThrow(() -> new AnnouncementNotFoundException(
+                        String.format("Announcement of id '%s' does not exist!", updateRequest.announcementId())
+                ));
+
+        log.info("Announcement from database : {}", announcement);
+
+        announcement.update(updateRequest);
+
+        log.info("New announcement : {}", announcement);
+
+        announcementRepository.save(announcement);
+
+        return announcementMapper.toDto(announcement);
     }
 
     private void validateUsersAuthentication(User user) {

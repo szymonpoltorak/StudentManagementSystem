@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import razepl.dev.sms.api.annoucement.AnnouncementServiceImpl;
 import razepl.dev.sms.api.annoucement.data.AnnouncementDto;
 import razepl.dev.sms.api.annoucement.data.AnnouncementRequest;
+import razepl.dev.sms.api.annoucement.data.UpdateRequest;
 import razepl.dev.sms.documents.announcement.Announcement;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementMapper;
 import razepl.dev.sms.documents.announcement.interfaces.AnnouncementRepository;
@@ -108,7 +109,7 @@ class AnnouncementServiceTest {
     }
 
     @Test
-    final void test_getListOfAnnouncements_shouldThrowUsernameNotFoundException() {
+    final void test_getListOfAnnouncements_shouldThrowUsernameNotFoundExceptionOnNotAuthenticatedUser() {
         // given
         final int NUMBER_OF_PAGE = -1;
 
@@ -136,7 +137,7 @@ class AnnouncementServiceTest {
     }
 
     @Test
-    final void test_addNewAnnouncement_shouldThrowAuthorNotFoundException() {
+    final void test_addNewAnnouncement_shouldThrowAuthorNotFoundExceptionOnNotAuthenticatedUser() {
         // given
         AnnouncementRequest request = testData.announcementRequest();
 
@@ -169,7 +170,7 @@ class AnnouncementServiceTest {
     }
 
     @Test
-    final void test_removeAnnouncement_shouldThrowUsernameNotFoundException() {
+    final void test_removeAnnouncement_shouldThrowUsernameNotFoundExceptionOnNotAuthenticatedUser() {
         // given
         String ANNOUNCEMENT_ID = "id1";
 
@@ -204,5 +205,37 @@ class AnnouncementServiceTest {
         // then
         assertThrows(AnnouncementNotFoundException.class,
                 () -> announcementService.removeAnnouncement(ANNOUNCEMENT_ID, user));
+    }
+
+    @Test
+    final void test_updateAnnouncement_shouldThrowUsernameNotFoundExceptionOnNotAuthenticatedUser() {
+        // given
+        Announcement announcement = testData.announcement1();
+        UpdateRequest request = testData.updateRequest();
+
+        // when
+
+        // then
+        assertThrows(UsernameNotFoundException.class, () -> announcementService.updateAnnouncement(request, null));
+    }
+
+    @Test
+    final void test_updateAnnouncement_shouldUpdateTitle() {
+        // given
+        Announcement announcement = testData.announcement1();
+        UpdateRequest updateRequest = testData.updateRequest();
+        AnnouncementDto expected = testData.updateRequestDto();
+
+        when(announcementRepository.findById(updateRequest.announcementId()))
+                .thenReturn(Optional.of(announcement));
+        when(announcementMapper.toDto(announcement))
+                .thenReturn(expected);
+
+        // when
+        AnnouncementDto result = announcementService.updateAnnouncement(updateRequest, testData.user());
+
+        // then
+        assertEquals(expected, result, String.format(ERROR_MESSAGE_PATTERN, expected, result));
+        verify(announcementRepository).save(any(Announcement.class));
     }
 }
