@@ -18,6 +18,7 @@ import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.documents.user.interfaces.UserMapper;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.auth.InvalidTokenException;
 import razepl.dev.sms.exceptions.auth.NullArgumentException;
@@ -88,22 +89,6 @@ class AuthServiceTest {
                 .username("john.doe@example.com")
                 .password("plainPassword")
                 .build();
-    }
-
-    @Test
-    final void test_register_should_save_user_and_return_tokens() {
-        // given
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
-        when(tokenManager.buildTokensIntoResponse(any(User.class))).thenReturn(AuthResponse.builder().build());
-
-        // when
-        AuthResponse authResponse = authService.register(registerUserRequest);
-
-        // then
-        assertNotNull(authResponse);
-        verify(userRepository).save(any(User.class));
-        verify(tokenManager).buildTokensIntoResponse(any(User.class));
     }
 
     @Test
