@@ -3,15 +3,14 @@ package razepl.dev.sms.api.auth.interfaces;
 import graphql.GraphQLError;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import razepl.dev.sms.exceptions.TokensUserNotFoundException;
-import razepl.dev.sms.exceptions.UserAlreadyExistsException;
 
 /**
  * The AuthExceptionInterface interface defines a methods for handling errors in Authentication.
  */
-public interface AuthExceptionInterface {
+public interface AuthExceptionHandler {
     GraphQLError handleConstraintValidationExceptions(ConstraintViolationException exception);
 
     GraphQLError handleMethodArgValidExceptions(MethodArgumentNotValidException exception);
@@ -24,7 +23,9 @@ public interface AuthExceptionInterface {
 
     GraphQLError handleTokenExceptions(IllegalArgumentException exception);
 
-    GraphQLError handleUserExistException(UserAlreadyExistsException exception);
+    GraphQLError handleUserExistException(IllegalStateException exception);
 
-    GraphQLError handleTokenExceptions(TokensUserNotFoundException exception);
+    GraphQLError handleTokenExceptions(IllegalStateException exception);
+
+    GraphQLError handleBadCredentialsException(BadCredentialsException exception);
 }

@@ -11,11 +11,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.documents.user.User;
-import razepl.dev.sms.exceptions.NullArgumentException;
+import razepl.dev.sms.exceptions.auth.NullArgumentException;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

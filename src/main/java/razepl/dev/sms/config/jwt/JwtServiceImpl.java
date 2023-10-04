@@ -15,13 +15,15 @@ import razepl.dev.sms.config.constants.Headers;
 import razepl.dev.sms.config.constants.Matchers;
 import razepl.dev.sms.config.constants.Properties;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
-import razepl.dev.sms.exceptions.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.auth.TokenDoesNotExistException;
 
 import java.security.Key;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
+
+import static razepl.dev.sms.api.auth.constants.AuthMappings.AUTH_MAPPING;
 
 /**
  * Service to help manage Jwt manipulation like creation.
@@ -91,7 +93,7 @@ public class JwtServiceImpl implements JwtService {
 
         String authHeader = request.getHeader(Headers.AUTH_HEADER);
 
-        if (request.getServletPath().contains(Matchers.AUTH_MAPPING) || authHeader == null || !authHeader.startsWith(Headers.TOKEN_HEADER)) {
+        if (request.getServletPath().contains(AUTH_MAPPING) || authHeader == null || !authHeader.startsWith(Headers.TOKEN_HEADER)) {
             return null;
         }
         return authHeader.substring(Headers.TOKEN_START_INDEX);

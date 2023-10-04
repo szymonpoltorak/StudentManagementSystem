@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import razepl.dev.sms.documents.token.interfaces.Token;
 import razepl.dev.sms.documents.user.User;
 
 /**
@@ -19,7 +18,7 @@ import razepl.dev.sms.documents.user.User;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "jwt_tokens")
-public class JwtToken implements Token {
+public class JwtToken {
     @Id
     private String tokenId;
 

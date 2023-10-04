@@ -1,0 +1,19 @@
+type Announcement {
+    title: String!
+    content: String!
+    date: String!
+    time: String!
+    authorName: String!
+    announcementId: String!
+}
+
+input AnnouncementRequest {
+    content: String!
+    title: String!
+}
+
+input UpdateRequest {
+    announcementId: String!
+    content: String!
+    title: String!
+}

@@ -1,17 +1,15 @@
-package razepl.dev.sms.auth;
+package razepl.dev.sms.api.auth;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import razepl.dev.sms.api.auth.AuthServiceImpl;
 import razepl.dev.sms.api.auth.data.AuthResponse;
 import razepl.dev.sms.api.auth.data.LoginRequest;
 import razepl.dev.sms.api.auth.data.RegisterRequest;
@@ -20,15 +18,25 @@ import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.documents.user.interfaces.UserMapper;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
-import razepl.dev.sms.exceptions.*;
+import razepl.dev.sms.exceptions.auth.InvalidTokenException;
+import razepl.dev.sms.exceptions.auth.NullArgumentException;
+import razepl.dev.sms.exceptions.auth.PasswordValidationException;
+import razepl.dev.sms.exceptions.auth.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.auth.UserAlreadyExistsException;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class AuthServiceTest {
@@ -84,22 +92,6 @@ class AuthServiceTest {
     }
 
     @Test
-    final void test_register_should_save_user_and_return_tokens() {
-        // given
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
-        when(tokenManager.buildTokensIntoResponse(any(User.class), anyBoolean())).thenReturn(AuthResponse.builder().build());
-
-        // when
-        AuthResponse authResponse = authService.register(registerUserRequest);
-
-        // then
-        assertNotNull(authResponse);
-        verify(userRepository).save(any(User.class));
-        verify(tokenManager).buildTokensIntoResponse(any(User.class), eq(false));
-    }
-
-    @Test
     final void test_register_should_throw_exception_if_password_is_invalid() {
         // given
         RegisterRequest registerRequest = RegisterRequest.builder()
@@ -115,7 +107,7 @@ class AuthServiceTest {
         // then
         assertThrows(PasswordValidationException.class, () -> authService.register(registerRequest));
         verify(userRepository, never()).save(any(User.class));
-        verify(tokenManager, never()).buildTokensIntoResponse(any(User.class), anyBoolean());
+        verify(tokenManager, never()).buildTokensIntoResponse(any(User.class));
     }
 
     @Test
@@ -126,7 +118,7 @@ class AuthServiceTest {
         // when and then
         assertThrows(UserAlreadyExistsException.class, () -> authService.register(registerUserRequest));
         verify(userRepository, never()).save(any(User.class));
-        verify(tokenManager, never()).buildTokensIntoResponse(any(User.class), anyBoolean());
+        verify(tokenManager, never()).buildTokensIntoResponse(any(User.class));
     }
 
     @Test
@@ -134,7 +126,7 @@ class AuthServiceTest {
         // given
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         when(authenticationManager.authenticate(any(Authentication.class))).thenReturn(null);
-        when(tokenManager.buildTokensIntoResponse(any(User.class), anyBoolean())).thenReturn(AuthResponse.builder().build());
+        when(tokenManager.buildTokensIntoResponse(any(User.class))).thenReturn(AuthResponse.builder().build());
 
         // when
         AuthResponse authResponse = authService.login(loginUserRequest);
@@ -142,7 +134,7 @@ class AuthServiceTest {
         // then
         assertNotNull(authResponse);
         verify(authenticationManager).authenticate(any(Authentication.class));
-        verify(tokenManager).buildTokensIntoResponse(any(User.class), eq(true));
+        verify(tokenManager).buildTokensIntoResponse(any(User.class));
     }
 
     @Test
@@ -154,7 +146,7 @@ class AuthServiceTest {
 
         // then
         assertThrows(UsernameNotFoundException.class, () -> authService.login(loginUserRequest));
-        verify(tokenManager, never()).buildTokensIntoResponse(any(User.class), anyBoolean());
+        verify(tokenManager, never()).buildTokensIntoResponse(any(User.class));
     }
 
     @Test

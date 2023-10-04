@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "475d544b-57bc-463c-a685-6ac9dca80edc",
+		"_postman_id": "0c880c97-af9f-49d4-ab6d-f17910fefeaa",
 		"name": "StudentManagementSystem",
 		"description": "Student management system written with Spring Boot. Made to learn technologies like GraphQL, MongoDB and Gradle.  \nApplication consists of graphql api only for now but I may add frontend in future.\n\n## Technology stack\n\n- Java 17,\n- Spring Boot,\n- Gradle Groovy,\n- GraphQL,\n- MongoDB,\n- Mongo Express,\n- Docker,\n- Jwt,\n- Postman,\n- Junit,\n- Mockito",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -38,11 +38,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n    registerUser (\r\n        registerRequest: {\r\n            name: \"Jacek\",\r\n            surname: \"Kowalski\",\r\n            email: \"jacek@gmail.com\",\r\n            dateOfBirth: \"2000-01-01\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ){\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -114,11 +110,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n    registerUser (\r\n        registerRequest: {\r\n            name: \"Jacek\",\r\n            surname: \"Kowalski\",\r\n            email: \"jacek@gmail.com\",\r\n            dateOfBirth: \"2000-01-01\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ){\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -217,11 +209,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query {\r\n    authenticateUser(\r\n        tokenRequest: {\r\n            authToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDEwMzM5MH0.GqY2Xb5jc1e0z5YGPpGnDpdUXYW1fVMBgtYHjAgUTf8\"\r\n        }\r\n    ) {\r\n        isAuthTokenValid\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -293,11 +281,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query {\r\n    authenticateUser(\r\n        tokenRequest: {\r\n            authToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDEwMzM5MH0.GqY2Xb5jc1e0z5YGPpGnDpdUXYW1fVMBgtYHjAgUTf7\"\r\n        }\r\n    ) {\r\n        isAuthTokenValid\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -373,7 +357,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKa\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+						"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
 						"variables": ""
 					}
 				},
@@ -396,11 +380,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKk\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -472,11 +452,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKa\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -541,6 +517,82 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Unauthorized\",\n            \"locations\": [\n                {\n                    \"line\": 2,\n                    \"column\": 5\n                }\n            ],\n            \"path\": [\n                \"loginUser\"\n            ],\n            \"extensions\": {\n                \"classification\": \"UNAUTHORIZED\"\n            }\n        }\n    ],\n    \"data\": {\n        \"loginUser\": null\n    }\n}"
+				},
+				{
+					"name": "Login - Bad Credentials",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    loginUser (\r\n        loginRequest: {\r\n            username: \"jacek@gmail.com\",\r\n            password: \"Abc1!l1.DKa\"\r\n        }\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 06:53:28 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Bad credentials\",\n            \"locations\": [],\n            \"extensions\": {\n                \"ClassName\": \"BadCredentialsException\",\n                \"HttpStatus\": \"UNAUTHORIZED\"\n            }\n        }\n    ],\n    \"data\": {\n        \"loginUser\": null\n    }\n}"
 				}
 			]
 		},
@@ -575,11 +627,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n    refreshUserToken(\r\n        refreshToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLC6Lo\"\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -651,11 +699,7 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n    refreshUserToken(\r\n        refreshToken: \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTQwMTY5OTAsImV4cCI6MTY5NDYyMTc5MH0.5tcAbW0OlO1hEKv2nAKhWjmIq8nPbuG4hL0B1HLCaso\"\r\n    ) {\r\n        authToken\r\n        refreshToken\r\n    }\r\n}\r\n",
-								"variables": ""
-							}
+							"mode": "graphql"
 						},
 						"url": {
 							"raw": "http://localhost:8080/graphql",
@@ -720,6 +764,715 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.\",\n            \"extensions\": {\n                \"ClassName\": \"TokenDoesNotExistException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"refreshUserToken\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "AddNewAnnouncement",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTYxNDMwMTksImV4cCI6MTY5NjIyOTQxOX0.BJODNKbjaeEZEBQ5r0rvwKBsMBNJB7gJVIS_CNS8qqA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    addNewAnnouncement(\r\n        announcementRequest: {\r\n            content: \"Hello World\",\r\n            title: \"Sic Parvis Magna\"\r\n        }\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddNewAnnouncement - User Not Authenticated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    addNewAnnouncement(\r\n        announcementRequest: {\r\n            content: \"Hello World\",\r\n            title: \"Sic Parvis Magna\"\r\n        }\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 06:47:41 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"User have to be authenticated using jwt token!\",\n            \"locations\": [],\n            \"extensions\": {\n                \"HttpStatus\": \"UNAUTHORIZED\",\n                \"ClassName\": \"AuthorNotFoundException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"addNewAnnouncement\": null\n    }\n}"
+				},
+				{
+					"name": "AddNewAnnouncement - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    addNewAnnouncement(\r\n        announcementRequest: {\r\n            content: \"Hello World\",\r\n            title: \"Sic Parvis Magna\"\r\n        }\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 06:50:37 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"addNewAnnouncement\": {\n            \"title\": \"Sic Parvis Magna\",\n            \"content\": \"Hello World\",\n            \"date\": \"2023-10-01\",\n            \"time\": \"08:50\",\n            \"authorName\": \"Jacek Kowalski\",\n            \"announcementId\": \"651916bdca37c1600f1e21e1\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "ListOfAnnouncements",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    listOfAnnouncements(\r\n        numberOfPage: 1\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ListOfAnnouncements -Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    listOfAnnouncements(\r\n        numberOfPage: 0\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 07:02:42 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"listOfAnnouncements\": [\n            {\n                \"title\": \"Sic parvis magna\",\n                \"content\": \"Hello World\",\n                \"date\": \"2023-09-30\",\n                \"time\": \"18:29\",\n                \"authorName\": \"Jacek Kowalski\",\n                \"announcementId\": \"65184cfb389eba0556f60b95\"\n            },\n            {\n                \"title\": \"Sic Parvis Magna\",\n                \"content\": \"Hello World\",\n                \"date\": \"2023-10-01\",\n                \"time\": \"08:50\",\n                \"authorName\": \"Jacek Kowalski\",\n                \"announcementId\": \"651916bdca37c1600f1e21e1\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "ListOfAnnouncements - Empty List",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    listOfAnnouncements(\r\n        numberOfPage: 1\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 07:03:33 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"listOfAnnouncements\": []\n    }\n}"
+				},
+				{
+					"name": "ListOfAnnouncements - Not Authenticated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    listOfAnnouncements(\r\n        numberOfPage: 1\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 07:06:19 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"User is not authenticated!\",\n            \"locations\": [],\n            \"extensions\": {\n                \"HttpStatus\": \"NOT_FOUND\",\n                \"ClassName\": \"UsernameNotFoundException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"listOfAnnouncements\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "RemoveAnnouncement",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWNla0BnbWFpbC5jb20iLCJpYXQiOjE2OTYxNTYyMDgsImV4cCI6MTY5NjI0MjYwOH0.XX_Tb5vkN6g7UZSvO1jjyV5F0ZftHLOXtkkprNk33WU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    removeAnnouncement(\r\n        announcementId: \"65194a4b6976ad3bc9c3a5ax\"\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RemoveAnnouncement - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    removeAnnouncement(\r\n        announcementId: \"65194a4b6976ad3bc9c3a5a4\"\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 10:30:44 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"removeAnnouncement\": {\n            \"title\": \"Sic Parvis Magna\",\n            \"content\": \"Hello World\",\n            \"date\": \"2023-10-01\",\n            \"time\": \"12:30\",\n            \"authorName\": \"Jacek Kowalski\",\n            \"announcementId\": \"65194a4b6976ad3bc9c3a5a4\"\n        }\n    }\n}"
+				},
+				{
+					"name": "RemoveAnnouncement - User not authenticated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    removeAnnouncement(\r\n        announcementId: \"65194a4b6976ad3bc9c3a5ax\"\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 10:34:07 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"User is not authenticated!\",\n            \"locations\": [],\n            \"extensions\": {\n                \"ClassName\": \"UsernameNotFoundException\",\n                \"HttpStatus\": \"NOT_FOUND\"\n            }\n        }\n    ],\n    \"data\": {\n        \"removeAnnouncement\": null\n    }\n}"
+				},
+				{
+					"name": "RemoveAnnouncement - Announcement Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    removeAnnouncement(\r\n        announcementId: \"65194a4b6976ad3bc9c3a5ax\"\r\n    ) {\r\n        title\r\n        content\r\n        date\r\n        time\r\n        authorName\r\n        announcementId\r\n    }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 01 Oct 2023 10:35:54 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"User with id 65194a4b6976ad3bc9c3a5ax was not found!\",\n            \"locations\": [],\n            \"extensions\": {\n                \"HttpStatus\": \"NOT_FOUND\",\n                \"ClassName\": \"AnnouncementNotFoundException\"\n            }\n        }\n    ],\n    \"data\": {\n        \"removeAnnouncement\": null\n    }\n}"
 				}
 			]
 		}

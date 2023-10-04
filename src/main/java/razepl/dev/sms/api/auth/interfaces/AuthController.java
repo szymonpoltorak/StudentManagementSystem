@@ -1,6 +1,10 @@
 package razepl.dev.sms.api.auth.interfaces;
 
-import razepl.dev.sms.api.auth.data.*;
+import razepl.dev.sms.api.auth.data.AuthResponse;
+import razepl.dev.sms.api.auth.data.LoginRequest;
+import razepl.dev.sms.api.auth.data.RegisterRequest;
+import razepl.dev.sms.api.auth.data.TokenRequest;
+import razepl.dev.sms.api.auth.data.TokenResponse;
 
 /**
  * An interface that defines the methods for authentication services.

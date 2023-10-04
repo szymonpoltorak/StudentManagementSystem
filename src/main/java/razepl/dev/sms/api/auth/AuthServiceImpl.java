@@ -9,15 +9,24 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import razepl.dev.sms.ArgumentValidator;
-import razepl.dev.sms.api.auth.data.*;
+import razepl.dev.sms.api.auth.data.AuthResponse;
+import razepl.dev.sms.api.auth.data.LoginRequest;
+import razepl.dev.sms.api.auth.data.RegisterRequest;
+import razepl.dev.sms.api.auth.data.TokenRequest;
+import razepl.dev.sms.api.auth.data.TokenResponse;
 import razepl.dev.sms.api.auth.interfaces.AuthService;
 import razepl.dev.sms.config.jwt.interfaces.JwtService;
 import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
+import razepl.dev.sms.documents.user.interfaces.UserMapper;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
-import razepl.dev.sms.exceptions.*;
+import razepl.dev.sms.exceptions.auth.InvalidTokenException;
+import razepl.dev.sms.exceptions.auth.PasswordValidationException;
+import razepl.dev.sms.exceptions.auth.TokenDoesNotExistException;
+import razepl.dev.sms.exceptions.auth.TokensUserNotFoundException;
+import razepl.dev.sms.exceptions.auth.UserAlreadyExistsException;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -39,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final TokenManagerService tokenManager;
     private final JwtService jwtService;
+    private final UserMapper userMapper;
 
     @Override
     public final AuthResponse register(RegisterRequest registerRequest) {
@@ -48,19 +58,15 @@ public class AuthServiceImpl implements AuthService {
 
         String password = validateUserRegisterData(registerRequest);
 
-        @Valid User user = User
-                .builder()
-                .name(registerRequest.name())
-                .email(registerRequest.email())
-                .dateOfBirth(LocalDate.parse(registerRequest.dateOfBirth()))
-                .surname(registerRequest.surname())
-                .password(passwordEncoder.encode(password))
-                .build();
-        userRepository.save(user);
+        User user = userMapper.toUser(registerRequest, password);
+
+        createUserWithValidation(user);
 
         log.info("Building token response for user : {}", user);
 
-        return tokenManager.buildTokensIntoResponse(user, false);
+        tokenManager.revokeUserTokens(user);
+
+        return tokenManager.buildTokensIntoResponse(user);
     }
 
     @Override
@@ -80,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
         );
         log.info("Building token response for user : {}", user);
 
-        return tokenManager.buildTokensIntoResponse(user, true);
+        return tokenManager.buildTokensIntoResponse(user);
     }
 
     @Override
@@ -118,6 +124,12 @@ public class AuthServiceImpl implements AuthService {
                 .builder()
                 .isAuthTokenValid(isAuthTokenValid)
                 .build();
+    }
+
+    private void createUserWithValidation(@Valid User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepository.save(user);
     }
 
     private String validateUserRegisterData(RegisterRequest registerRequest) {

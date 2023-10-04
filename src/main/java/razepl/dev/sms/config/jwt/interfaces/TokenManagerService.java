@@ -20,10 +20,9 @@ public interface TokenManagerService {
      * Builds an {@link AuthResponse} object with authentication and refresh tokens generated from the given user.
      *
      * @param user            the user for which to generate tokens
-     * @param shouldBeRevoked a flag indicating whether to revoke any existing tokens for the user
      * @return the constructed {@link AuthResponse} object
      */
-    AuthResponse buildTokensIntoResponse(User user, boolean shouldBeRevoked);
+    AuthResponse buildTokensIntoResponse(User user);
 
     /**
      * Revokes all tokens for the given user.
@@ -33,13 +32,6 @@ public interface TokenManagerService {
     void revokeUserTokens(User user);
 
     /**
-     * This method revokes all tokens associated with a given username.
-     *
-     * @param username The username for which to revoke tokens.
-     */
-    void revokeUserTokens(String username);
-
-    /**
      * Saves the given JWT token for the given user.
      *
      * @param jwtToken the JWT token to save
@@ -47,11 +39,5 @@ public interface TokenManagerService {
      */
     void saveUsersToken(String jwtToken, User user);
 
-    /**
-     * This method saves a JWT token associated with a given username.
-     *
-     * @param jwtToken The JWT token to save.
-     * @param username The username associated with the token.
-     */
-    void saveUsersToken(String jwtToken, String username);
+    AuthResponse refreshUserToken(User user, String authToken, String refreshToken);
 }

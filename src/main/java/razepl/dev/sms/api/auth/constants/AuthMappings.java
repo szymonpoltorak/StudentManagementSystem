@@ -9,6 +9,8 @@ public final class AuthMappings {
      */
     public static final String REGISTER_MAPPING = "registerUser";
 
+    public static final String AUTH_MAPPING = "/api/auth";
+
     /**
      * The mapping for user login endpoint.
      */
