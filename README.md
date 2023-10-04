@@ -36,4 +36,5 @@ docker compose up -d
 * Jwt,
 * Postman,
 * Junit,
+* Mapstruct,
 * Mockito
