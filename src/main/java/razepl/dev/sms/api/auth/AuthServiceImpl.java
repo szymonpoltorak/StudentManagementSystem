@@ -20,7 +20,6 @@ import razepl.dev.sms.config.jwt.interfaces.TokenManagerService;
 import razepl.dev.sms.documents.token.JwtToken;
 import razepl.dev.sms.documents.token.interfaces.TokenRepository;
 import razepl.dev.sms.documents.user.User;
-import razepl.dev.sms.documents.user.interfaces.UserMapper;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 import razepl.dev.sms.exceptions.auth.InvalidTokenException;
 import razepl.dev.sms.exceptions.auth.PasswordValidationException;
@@ -48,7 +47,6 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final TokenManagerService tokenManager;
     private final JwtService jwtService;
-    private final UserMapper userMapper;
 
     @Override
     public final AuthResponse register(RegisterRequest registerRequest) {
@@ -58,8 +56,14 @@ public class AuthServiceImpl implements AuthService {
 
         String password = validateUserRegisterData(registerRequest);
 
-        User user = userMapper.toUser(registerRequest, password);
-
+        User user = User
+                .builder()
+                .name(registerRequest.name())
+                .email(registerRequest.email())
+                .dateOfBirth(LocalDate.parse(registerRequest.dateOfBirth()))
+                .surname(registerRequest.surname())
+                .password(passwordEncoder.encode(password))
+                .build();
         createUserWithValidation(user);
 
         log.info("Building token response for user : {}", user);
