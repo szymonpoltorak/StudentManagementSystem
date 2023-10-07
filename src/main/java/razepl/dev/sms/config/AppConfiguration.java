@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import razepl.dev.sms.documents.user.interfaces.UserRepository;
 
+import java.security.SecureRandom;
+
 
 /**
  * Class made to provide necessary Beans for Spring app.
@@ -20,6 +22,7 @@ import razepl.dev.sms.documents.user.interfaces.UserRepository;
 @RequiredArgsConstructor
 @Configuration
 public class AppConfiguration {
+    private static final int BCRYPT_STRENGTH = 10;
     private final UserRepository userRepository;
 
     @Bean
@@ -40,7 +43,7 @@ public class AppConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(BCRYPT_STRENGTH, new SecureRandom(SecureRandom.getSeed(BCRYPT_STRENGTH)));
     }
 
     @Bean
